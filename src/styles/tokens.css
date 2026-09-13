@@ -51,8 +51,8 @@
   --s-8: 32px; --s-12: 48px; --s-16: 64px; --s-24: 96px;
 
   /* layout */
-  --content-max: 1200px;
-  --gutter: 20px;
+  --content-max: 100%;
+  --gutter: clamp(20px, 4vw, 96px);
   --section-y: clamp(48px, 4vw + 32px, 104px);
   --radius-control: 8px;
   --radius-panel: 12px;
@@ -62,3 +62,4 @@
 }
 
 @media (max-width: 360px) { :root { --gutter: 16px; } }
+
