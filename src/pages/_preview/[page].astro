@@ -1,0 +1,9 @@
+---
+import Base from "../../layouts/Base.astro";
+import Button from "../../components/Button.astro";
+import ProductCard from "../../components/ProductCard.astro";
+import ProductStatus from "../../components/ProductStatus.astro";
+import {publicProducts} from "../../data/products";
+export function getStaticPaths(){return import.meta.env.DEV?[{params:{page:"components"}}]:[];}
+---
+<Base title="Component reference" description="Local development component reference." noindex><section class="section"><div class="wrap"><h1>Component reference.</h1><p>Local development only. This route is excluded from production output.</p><h2>Actions</h2><div class="actions"><Button href="/products">Primary action</Button><Button href="/support" variant="secondary">Secondary action</Button><button class="btn btn-primary" disabled>Unavailable</button></div><h2>Status</h2><ProductStatus lifecycle="Complete" ordering="inquiry"/><ProductStatus lifecycle="Prototype" ordering="none"/><h2>Cards</h2><div class="grid grid-3">{publicProducts().map(p=><ProductCard product={p}/>)}</div><h2>Form fields</h2><label for="sample">Email (required)</label><input id="sample" type="email" required aria-describedby="sample-help"/><p id="sample-help">Persistent helper text.</p><h2>Specifications</h2><table><caption>Example specification row</caption><thead><tr><th scope="col">Feature</th><th scope="col">Details</th></tr></thead><tbody><tr><th scope="row">Display</th><td>320 × 240 color LCD</td></tr></tbody></table></div></section></Base>

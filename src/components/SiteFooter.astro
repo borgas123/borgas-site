@@ -1,0 +1,55 @@
+---
+import { site } from "../data/site";
+import { families } from "../data/products";
+const year = new Date().getFullYear();
+---
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="cols">
+      <div>
+        <img class="footer-logo" src="/mark.png" alt="BORGAS raven and wordmark" width="511" height="437" loading="lazy"/>
+        <p class="legal">{site.legalName || site.name}</p>
+      </div>
+      <nav aria-label="Products">
+        <h3>Products</h3>
+        <ul>
+          <li><a href={families.racing.slug}>{families.racing.name}</a></li>
+          <li><a href={families.diagnostics.slug}>{families.diagnostics.name}</a></li>
+          <li><a href="/products">All products</a></li>
+        </ul>
+      </nav>
+      <nav aria-label="Company">
+        <h3>BORGAS</h3>
+        <ul>
+          <li><a href="/support">Support</a></li>
+          <li><a href="/about">About</a></li>
+          <li><a href="/contact">Contact</a></li>
+          <li><a href="/privacy">Privacy</a></li>
+        </ul>
+      </nav>
+      <nav aria-label="Downloads">
+        <h3>Downloads</h3>
+        <ul>
+          <li><a href={site.links.firmware} rel="noopener">Firmware and Device Manager</a></li>
+        </ul>
+      </nav>
+    </div>
+    <p class="fine">© {year} {site.legalName || site.name}. Product names and codes are BORGAS product identifiers.</p>
+  </div>
+</footer>
+
+<style>
+.footer-logo{width:120px;height:auto;background:white;padding:12px;border-radius:4px}
+  .site-footer { border-top: 1px solid var(--border-subtle); padding: var(--s-12) 0 var(--s-8); background: var(--bg-surface); }
+  .cols { display: grid; gap: var(--s-8); grid-template-columns: 1.4fr repeat(3, 1fr); }
+  @media (max-width: 720px) { .cols { grid-template-columns: 1fr 1fr; } }
+  @media (max-width: 420px) { .cols { grid-template-columns: 1fr; } }
+  .fmark { width: 72px; height: 62px; background: var(--text-secondary);
+    -webkit-mask: url(/mark.png) center / contain no-repeat; mask: url(/mark.png) center / contain no-repeat; }
+  .legal { margin-top: var(--s-3); font-family: var(--font-heading); letter-spacing: .1em; color: var(--text-primary); }
+  h3 { font-size: var(--fs-label); letter-spacing: .14em; text-transform: uppercase; color: var(--text-secondary); margin-bottom: var(--s-3); }
+  ul { list-style: none; margin: 0; padding: 0; display: grid; gap: var(--s-2); }
+  ul a { color: var(--text-secondary); text-decoration: none; }
+  ul a:hover { color: var(--text-primary); text-decoration: underline; }
+  .fine { margin: var(--s-8) 0 0; font-size: var(--fs-label); color: var(--text-secondary); max-width: none; }
+</style>

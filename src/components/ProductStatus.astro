@@ -1,0 +1,24 @@
+---
+// Status is TEXT with a colour beside it, never colour alone. Lifecycle and
+// ordering are shown separately when both are relevant, because "Complete"
+// and "Ask about availability" are different facts about the same product.
+import { lifecycleLabel, orderingLabel, type Lifecycle, type Ordering } from "../data/products";
+interface Props { lifecycle: Lifecycle; ordering?: Ordering; note?: string; }
+const { lifecycle, ordering, note } = Astro.props;
+const l = lifecycleLabel[lifecycle];
+---
+<div class="status">
+  <span class={`pill tone-${l.tone}`}><span class="dot" aria-hidden="true"></span>{l.text}</span>
+  {ordering && <span class="pill tone-neutral">{orderingLabel[ordering]}</span>}
+  {note && <span class="note">{note}</span>}
+</div>
+
+<style>
+  .status { display: flex; flex-wrap: wrap; align-items: center; gap: var(--s-2) var(--s-3); }
+  .pill { display: inline-flex; align-items: center; gap: var(--s-2); font-size: var(--fs-label); font-weight: 600;
+    padding: 4px 10px; border-radius: 999px; border: 1px solid var(--border-subtle); color: var(--text-primary); background: var(--bg-raised); }
+  .dot { width: 8px; height: 8px; border-radius: 50%; background: currentColor; }
+  .tone-positive .dot { background: var(--status-positive); }
+  .tone-pending  .dot { background: var(--status-pending); }
+  .note { font-size: var(--fs-label); color: var(--text-secondary); flex-basis: 100%; }
+</style>

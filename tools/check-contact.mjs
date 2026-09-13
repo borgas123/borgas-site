@@ -1,0 +1,12 @@
+import {chromium} from '@playwright/test';
+const browser=await chromium.launch({channel:'chrome',headless:true});
+const page=await browser.newPage({viewport:{width:390,height:844}});
+await page.goto('http://127.0.0.1:4321/contact?product=BRC-02&topic=Purchase%20inquiry');
+if(await page.locator('#product').inputValue()!=='BRC-02')throw Error('Product not selected');
+if(await page.locator('#topic').inputValue()!=='Purchase inquiry')throw Error('Topic not selected');
+await page.locator('#email').fill('not-an-email');await page.locator('#message').fill('Layout check');
+if(await page.locator('#email').evaluate(el=>el.validity.valid))throw Error('Invalid email accepted');
+if(!await page.getByRole('button',{name:'Prepare email'}).isDisabled())throw Error('Unconfigured contact is enabled');
+await page.screenshot({path:'qa-artifacts/contact-390.png',fullPage:true});
+console.log('PASS: inquiry preselection, native email validation, disabled unconfigured form. No message sent.');
+await browser.close();

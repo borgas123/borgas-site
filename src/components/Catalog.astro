@@ -1,0 +1,21 @@
+---
+import ProductCard from "./ProductCard.astro";
+import {publicProducts} from "../data/products";
+---
+<nav class="filters" aria-label="Filter products"><a href="/products" data-filter="all" aria-current="true">All products</a><a href="/products?family=racing" data-filter="racing">Racing Systems</a><a href="/products?family=diagnostics" data-filter="diagnostics">Diagnostic Systems</a></nav>
+<p id="result-count" role="status" aria-live="polite">{publicProducts().length} products</p>
+<div class="grid grid-3" id="catalog">{publicProducts().map(p=><div data-family={p.family}><ProductCard product={p}/></div>)}</div>
+<script>
+const links = [...document.querySelectorAll<HTMLAnchorElement>("[data-filter]")];
+const cards = [...document.querySelectorAll<HTMLElement>("[data-family]")];
+function apply() {
+ const value = new URL(location.href).searchParams.get("family");
+ const family = value === "racing" || value === "diagnostics" ? value : "all";
+ cards.forEach(card=>card.hidden = family !== "all" && card.dataset.family !== family);
+ links.forEach(a=> { if(a.dataset.filter === family) a.setAttribute("aria-current","true"); else a.removeAttribute("aria-current"); });
+ const count = document.getElementById("result-count");
+ if(count) count.textContent = cards.filter(c=>!c.hidden).length + " products";
+}
+links.forEach(a=>a.addEventListener("click",e=>{if(e.ctrlKey||e.metaKey||e.shiftKey||e.altKey)return;e.preventDefault();history.pushState({}, "", a.href);apply();}));
+window.addEventListener("popstate", apply);apply();
+</script>

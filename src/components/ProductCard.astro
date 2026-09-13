@@ -1,0 +1,17 @@
+---
+import {families,type Product} from "../data/products";
+import ProductStatus from "./ProductStatus.astro";
+interface Props{product:Product}
+const {product:p}=Astro.props;const img=p.images[0];
+---
+<article class="product-card"><div class="card-media">{img?<figure><img src={img.src} alt={img.alt} loading="lazy" width="480" height="360"/><figcaption>{p.family==="racing"?"Display render · Demonstration data":"Instrument interface example"}</figcaption></figure>:<div class="type-art" aria-hidden="true"><span>{p.family==="racing"?"RACING SYSTEMS":"DIAGNOSTIC SYSTEMS"}</span><strong>{p.code}</strong><span>{p.name}</span></div>}</div><div class="card-body"><p class="eyebrow">{families[p.family].name}</p><h3>{p.code}<span>{p.name}</span></h3><p class="card-description">{p.descriptor}</p><ProductStatus lifecycle={p.lifecycle}/><a class="card-link" href={"/products/"+p.slug}>Explore {p.code} <span aria-hidden="true">↗</span></a></div></article>
+<style>
+.product-card{height:100%;display:flex;flex-direction:column;background:var(--bg-surface);border:1px solid var(--border-subtle);border-radius:12px;overflow:hidden}
+.card-media{aspect-ratio:4/3;background:var(--bg-page);display:grid;place-items:center;padding:20px}
+.card-media img{height:180px;object-fit:contain;margin:auto}
+.card-media figcaption{font-size:11px;text-align:center}
+.card-body{padding:24px;display:flex;flex-direction:column;gap:12px;flex:1}
+.card-body p,.card-body h3{margin:0}h3 span{display:block;font-size:1rem;color:var(--text-secondary);margin-top:8px;font-weight:400}
+.card-description{font-size:.95rem;flex:1}.card-link{display:flex;justify-content:space-between;border-top:1px solid var(--border-subtle);padding-top:16px;margin-top:8px;font-weight:600}
+.type-art{display:grid;gap:16px;width:100%;color:var(--text-secondary)}.type-art span{font-size:12px;letter-spacing:.12em}.type-art strong{font:600 clamp(2rem,4vw,3rem) var(--font-heading);color:var(--text-primary)}
+</style>

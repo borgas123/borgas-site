@@ -1,0 +1,129 @@
+/* Base typography, layout primitives and the few global rules.
+   Component styles live with their components. */
+
+@import "@fontsource/inter/latin-400.css";
+@import "@fontsource/inter/latin-500.css";
+@import "@fontsource/inter/latin-600.css";
+@import "@fontsource/space-grotesk/latin-500.css";
+@import "@fontsource/space-grotesk/latin-600.css";
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html { color-scheme: dark; scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+
+body {
+  margin: 0;
+  background: var(--bg-page);
+  color: var(--text-primary);
+  font-family: var(--font-body);
+  font-size: var(--fs-body);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  /* Tabular numerals everywhere, per the brief: specification values line up. */
+  font-variant-numeric: tabular-nums;
+}
+
+h1, h2, h3, h4 {
+  font-family: var(--font-heading);
+  font-weight: 600;
+  color: var(--text-primary);
+  margin: 0 0 var(--s-4);
+  letter-spacing: -0.01em;
+  text-wrap: balance;
+}
+h1 { font-size: var(--fs-hero); line-height: 1.08; }
+h2 { font-size: var(--fs-section); line-height: 1.18; }
+h3 { font-size: var(--fs-h3); line-height: 1.3; }
+
+p { margin: 0 0 var(--s-4); color: var(--text-secondary); max-width: 68ch; }
+p.lede { font-size: 1.125em; }
+
+a { color: var(--accent-cyan); text-underline-offset: 0.15em; transition: color var(--t-fast); }
+a:hover { color: var(--text-primary); }
+/* In prose, links carry an underline so colour is not their only signal. */
+.prose a { text-decoration: underline; }
+
+:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+img { max-width: 100%; height: auto; display: block; }
+
+/* skip link, per the brief's accessibility section */
+.skip-link {
+  position: absolute; left: var(--s-4); top: -100px;
+  background: var(--action-primary); color: #fff;
+  padding: var(--s-2) var(--s-4); border-radius: var(--radius-control);
+  z-index: 100; font-weight: 600;
+}
+.skip-link:focus { top: var(--s-4); }
+
+/* layout primitives */
+.wrap { max-width: var(--content-max); margin: 0 auto; padding: 0 var(--gutter); }
+.section { padding: var(--section-y) 0; }
+.section + .section { border-top: 1px solid var(--border-subtle); }
+.eyebrow {
+  font-size: var(--fs-label); letter-spacing: 0.16em; text-transform: uppercase;
+  color: var(--accent-violet); font-weight: 600; margin: 0 0 var(--s-3);
+}
+.grid { display: grid; gap: var(--s-6); }
+.grid-2 { grid-template-columns: repeat(auto-fit, minmax(min(100%, 340px), 1fr)); }
+.grid-3 { grid-template-columns: repeat(auto-fill, minmax(min(100%, 300px), 1fr)); }
+.actions { display: flex; flex-wrap: wrap; gap: var(--s-3); align-items: center; }
+
+/* panels */
+.panel {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-panel);
+  padding: var(--s-6);
+}
+
+/* the one restrained galaxy treatment the brief allows: a low-opacity glow
+   behind the hero product area, nowhere else */
+.glow {
+  position: relative; isolation: isolate;
+}
+.glow::before {
+  content: ""; position: absolute; inset: -20% -10%; z-index: -1; pointer-events: none;
+  background:
+    radial-gradient(60% 55% at 70% 40%, rgba(71,223,242,.16), transparent 70%),
+    radial-gradient(45% 45% at 30% 70%, rgba(124,58,237,.18), transparent 70%),
+    radial-gradient(35% 35% at 85% 85%, rgba(255,110,199,.08), transparent 70%);
+  filter: blur(24px);
+}
+
+/* tables: real tables, legible on mobile via a bounded scroller */
+.table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+table { border-collapse: collapse; width: 100%; font-size: 0.95em; }
+th, td { text-align: left; padding: var(--s-3) var(--s-4); border-bottom: 1px solid var(--border-subtle); vertical-align: top; }
+th { color: var(--text-secondary); font-weight: 600; font-size: var(--fs-label); letter-spacing: 0.06em; text-transform: uppercase; }
+td { color: var(--text-primary); }
+td.muted { color: var(--text-secondary); }
+
+/* image captions - concept and demo material is labelled, per the brief */
+figure { margin: 0; }
+figcaption { font-size: var(--fs-label); color: var(--text-secondary); margin-top: var(--s-2); }
+
+.visually-hidden {
+  position: absolute !important; width: 1px; height: 1px; overflow: hidden;
+  clip: rect(0 0 0 0); white-space: nowrap;
+}
+
+/* Page compositions */
+.split{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.15fr);gap:64px;align-items:center}
+.hero{padding-top:72px;padding-bottom:72px}.hero-note{font-size:12px;letter-spacing:.1em;margin:28px 0 0;color:var(--text-secondary)}
+.hero .actions{margin-top:32px}.brand-stage{display:grid;justify-items:center;gap:20px}.brand-stage img{width:min(100%,350px);padding:28px;background:#fff;border-radius:12px}.brand-stage p{font-size:13px;text-align:center}
+.family-grid{margin-top:40px}.family-feature{padding:36px;border-top:2px solid var(--accent-violet);background:var(--bg-surface);text-decoration:none;display:flex;flex-direction:column;gap:8px}.family-feature:last-child{border-color:var(--accent-cyan)}.family-feature h3{font-size:1.75rem;display:flex;justify-content:space-between;gap:16px}.family-feature:hover h3{text-decoration:underline}.family-detail{font-size:13px;color:var(--accent-cyan);margin-top:auto}
+.feature-section{background:linear-gradient(135deg,#101927,#080c14)}.display-stage{padding:28px;background:var(--bg-page);border:1px solid var(--border-subtle);border-radius:12px}.display-stage img{width:100%;max-height:400px;object-fit:contain}.display-stage figcaption{margin-top:20px}.feature-list{padding-left:20px;color:var(--text-secondary)}.feature-list li{margin:0 0 20px}.feature-list strong{color:var(--text-primary)}.section-heading{display:flex;justify-content:space-between;gap:32px;align-items:center;margin-bottom:32px}.section-heading h2{margin-bottom:8px}.closing{background:var(--bg-surface)}.closing .section-heading{margin-bottom:0}.reading{max-width:800px}.reading h2{margin-top:48px}.small{font-size:.85rem}.product-name{font-size:clamp(1.4rem,2vw,2rem);color:var(--text-secondary)}.product-actions{margin:24px 0 16px}.breadcrumbs{display:flex;flex-wrap:wrap;gap:12px;font-size:14px;margin-bottom:40px}.gallery{margin-top:32px}.gallery img{width:100%;height:auto;aspect-ratio:4/3;object-fit:contain;background:var(--bg-page)}.planned{color:var(--status-pending)!important}.steps{padding-left:24px;color:var(--text-secondary)}.steps li{padding:0 0 24px 12px}caption{text-align:left;padding:16px;color:var(--text-secondary)}.support-row{display:grid;grid-template-columns:1fr 1fr;gap:64px;padding:48px 0;border-top:1px solid var(--border-subtle)}.filters{display:flex;flex-wrap:wrap;gap:12px;margin:32px 0 24px}.filters a{border:1px solid var(--border-control);border-radius:8px;min-height:48px;padding:10px 20px;text-decoration:none;color:var(--text-primary)}.filters a[aria-current]{background:var(--bg-raised);border-color:var(--accent-cyan)}[hidden]{display:none!important}label{display:block;font-weight:500;margin:20px 0 8px}label span{font-weight:400;color:var(--text-secondary);font-size:.85rem}input,select,textarea{display:block;width:100%;font:inherit;color:var(--text-primary);background:var(--bg-page);border:1px solid var(--border-control);padding:12px;border-radius:8px}textarea{resize:vertical}button{font:inherit;cursor:pointer}button:disabled{opacity:.6;cursor:not-allowed}.notice{border-left:3px solid var(--status-pending);padding-left:16px}form .small{margin-top:20px}#form-status{margin-top:16px}.glow:before{inset:0;filter:blur(20px)}:target{scroll-margin-top:24px}p,li,td,a{overflow-wrap:break-word}
+@media(max-width:900px){.split{gap:32px}.hero{padding-top:48px;padding-bottom:48px}.section-heading{align-items:flex-start;flex-direction:column}.support-row{gap:32px}.family-feature{padding:24px}}
+@media(max-width:640px){.split,.support-row{grid-template-columns:1fr}.hero .brand-stage{margin-top:16px}.brand-stage img{max-width:240px}.hero .actions{align-items:stretch}.hero .btn{flex:1 1 100%}.family-feature h3{font-size:1.5rem}.display-stage{padding:16px}.product-actions .btn{flex:1 1 100%}}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{transition:none!important;animation:none!important}}
+
+
+/* Allow enlarged text to reflow within grid and flex items. */
+.split>*{min-width:0}h1,h2,h3{overflow-wrap:anywhere}.family-feature h3{flex-wrap:wrap}.btn{max-width:100%;padding-top:12px;padding-bottom:12px}
+@media(max-width:640px){.split,.support-row{grid-template-columns:minmax(0,1fr)}}

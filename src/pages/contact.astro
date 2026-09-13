@@ -1,0 +1,25 @@
+---
+import Base from "../layouts/Base.astro";
+import {site} from "../data/site";
+import {publicProducts} from "../data/products";
+const ready=Boolean(site.contactEmail);
+---
+<Base title="Contact" description="Ask BORGAS about a product, your racing setup, diagnostic equipment or technical support."><section class="section"><div class="wrap split"><div><p class="eyebrow">Talk to BORGAS</p><h1>Tell us what<br/>you have in mind.</h1><p class="lede">Product questions, a new setup or help with an existing device. Start with the product and what you want to do.</p><p>For technical support, include your hardware revision, software version and the behavior you’re seeing. Please leave out passwords and confidential service documents.</p>{ready&&<p class="prose">Email <a href={"mailto:"+site.contactEmail}>{site.contactEmail}</a></p>}</div><div class="panel">
+{ready||import.meta.env.DEV?<form id="inquiry" data-recipient={site.contactEmail}>
+{!ready&&<p class="notice">Preview only: the contact recipient has not been configured. This form cannot send a message yet.</p>}
+<label for="name">Name <span>(optional)</span></label><input id="name" name="name" autocomplete="name" maxlength="120"/>
+<label for="email">Email <span>(required)</span></label><input id="email" name="email" type="email" autocomplete="email" required maxlength="254"/>
+<label for="topic">Topic <span>(required)</span></label><select id="topic" name="topic" required>{["Purchase inquiry","Product question","Technical support","General inquiry"].map(t=><option>{t}</option>)}</select>
+<label for="product">Product <span>(optional)</span></label><select id="product" name="product"><option value="">General / Not sure</option>{publicProducts().map(p=><option value={p.code}>{p.code} — {p.name}</option>)}</select>
+<label for="message">Message <span>(required)</span></label><textarea id="message" name="message" rows="6" required maxlength="4000"></textarea>
+<p class="small">This opens your email application with a draft. Nothing is submitted by this website. Review and send the email there.</p><button type="submit" class="btn btn-primary" disabled={!ready}>Prepare email</button><p id="form-status" role="status" aria-live="polite"></p><p class="small"><a href="/privacy">How your information is handled</a></p>
+</form>:<div><h2>Contact is being set up.</h2><p>Online inquiries are not available yet. You can still explore product details and the existing support resources.</p><a href="/support">View product support ↗</a></div>}
+</div></div></section></Base>
+<script>
+const form=document.querySelector<HTMLFormElement>("#inquiry");
+if(form){
+ const params=new URL(location.href).searchParams;
+ for(const name of ["topic","product"]){const select=form.elements.namedItem(name) as HTMLSelectElement;const value=params.get(name);if(value&&[...select.options].some(o=>o.value===value))select.value=value;}
+ form.addEventListener("submit",e=>{e.preventDefault();if(!form.reportValidity())return;const recipient=form.dataset.recipient;if(!recipient)return;const values=new FormData(form);const subject=String(values.get("topic"))+" / "+(values.get("product")||"BORGAS");const body="Name: "+values.get("name")+"\nReply email: "+values.get("email")+"\nProduct: "+(values.get("product")||"General")+"\n\n"+values.get("message");location.href="mailto:"+recipient+"?subject="+encodeURIComponent(subject)+"&body="+encodeURIComponent(body);const status=document.getElementById("form-status");if(status)status.textContent="Your email draft is ready to open. Send it in your email application; this website has not submitted a message. Your text remains here.";});
+}
+</script>

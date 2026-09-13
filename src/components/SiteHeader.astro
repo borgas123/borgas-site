@@ -1,0 +1,26 @@
+---
+import Button from "./Button.astro";
+const path=Astro.url.pathname.replace(/\/$/,"")||"/";
+const items=[["/products","Products"],["/racing","Racing"],["/diagnostics","Diagnostics"],["/support","Support"],["/about","About"]];
+---
+<header class="site-header"><div class="wrap header-bar">
+<a class="brand" href="/" aria-label="BORGAS home"><img src="/mark.png" alt="BORGAS" width="511" height="437"/></a>
+<button id="menu-btn" aria-expanded="false" aria-controls="site-nav" type="button" hidden>Menu <span aria-hidden="true">☰</span></button>
+<nav id="site-nav" aria-label="Primary"><ul>{items.map(([href,label])=><li><a href={href} aria-current={path===href||path.startsWith(href+"/")?"page":undefined}>{label}</a></li>)}<li><Button href="/contact">Contact</Button></li></ul></nav>
+</div></header>
+<style>
+.site-header{background:var(--bg-page);border-bottom:1px solid var(--border-subtle)}
+.header-bar{display:flex;align-items:center;justify-content:space-between;gap:24px;padding-top:12px;padding-bottom:12px}
+.brand{display:block;background:white;border-radius:4px;padding:8px;flex-shrink:0}
+.brand img{width:100px;height:auto}
+nav ul{display:flex;align-items:center;gap:16px;list-style:none;margin:0;padding:0}
+nav a:not(.btn){display:block;padding:12px 8px;color:var(--text-secondary);text-decoration:none}
+nav a[aria-current]{color:var(--text-primary);text-decoration:underline;text-decoration-color:var(--accent-cyan);text-underline-offset:8px}
+#menu-btn{background:var(--bg-raised);border:1px solid var(--border-control);color:var(--text-primary);padding:12px 16px;border-radius:8px;min-height:48px;font:inherit}
+#menu-btn:not([hidden]){display:none}
+@media(max-width:899px){.header-bar{flex-wrap:wrap}.brand img{width:80px}#menu-btn:not([hidden]){display:block}nav{width:100%}nav ul{align-items:stretch;flex-direction:column;gap:0}nav[data-enhanced="true"]:not([data-open="true"]){display:none}nav li:last-child{margin-top:12px}}
+</style>
+<script>
+const button=document.querySelector<HTMLButtonElement>("#menu-btn");const nav=document.querySelector<HTMLElement>("#site-nav");
+if(button&&nav){button.hidden=false;nav.dataset.enhanced="true";const set=(open:boolean)=>{button.setAttribute("aria-expanded",String(open));nav.dataset.open=String(open);};button.addEventListener("click",()=>set(button.getAttribute("aria-expanded")!=="true"));document.addEventListener("keydown",e=>{if(e.key==="Escape"&&button.getAttribute("aria-expanded")==="true"){set(false);button.focus();}});}
+</script>

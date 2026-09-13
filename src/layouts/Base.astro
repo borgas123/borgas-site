@@ -1,0 +1,57 @@
+---
+// The page shell. Every public page gets: unique title, description, canonical
+// on the real domain, social preview metadata, skip link, landmarks, header
+// and footer. Organization structured data on the home page only.
+import "../styles/tokens.css";
+import "../styles/base.css";
+import SiteHeader from "../components/SiteHeader.astro";
+import SiteFooter from "../components/SiteFooter.astro";
+import { site } from "../data/site";
+
+interface Props {
+  title: string;            // page-specific; the site name is appended here
+  description: string;
+  image?: string;           // social preview, site-relative
+  noindex?: boolean;
+  isHome?: boolean;
+}
+const { title, description, image = "/mark.png", noindex = false, isHome = false } = Astro.props;
+const fullTitle = isHome ? `${site.name} — ${site.tagline}` : `${title} | ${site.name}`;
+const canonical = new URL(Astro.url.pathname, site.domain).href;
+const ogImage = new URL(image, site.domain).href;
+---
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>{fullTitle}</title>
+  <meta name="description" content={description} />
+  <link rel="canonical" href={canonical} />
+  {noindex && <meta name="robots" content="noindex" />}
+  <link rel="icon" href="/mark.png" type="image/png" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content={site.name} />
+  <meta property="og:title" content={fullTitle} />
+  <meta property="og:description" content={description} />
+  <meta property="og:url" content={canonical} />
+  <meta property="og:image" content={ogImage} />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="theme-color" content="#080C14" />
+  {isHome && (
+    <script is:inline type="application/ld+json" set:html={JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      name: site.legalName || site.name,
+      url: site.domain,
+      logo: new URL("/mark.png", site.domain).href,
+    })} />
+  )}
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <SiteHeader />
+  <main id="main"><slot /></main>
+  <SiteFooter />
+</body>
+</html>

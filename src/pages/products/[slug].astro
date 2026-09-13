@@ -1,0 +1,20 @@
+---
+import Base from "../../layouts/Base.astro";
+import Button from "../../components/Button.astro";
+import ProductStatus from "../../components/ProductStatus.astro";
+import { publicProducts,families } from "../../data/products";
+export function getStaticPaths(){return publicProducts().map(product=>({params:{slug:product.slug},props:{product}}));}
+const {product:p}=Astro.props;const family=families[p.family];
+const contact="/contact?product="+encodeURIComponent(p.code)+"&topic="+encodeURIComponent(p.ordering==="none"?"Product question":"Purchase inquiry");
+---
+<Base title={p.code+" | "+family.name} description={p.descriptor} image={p.images[0]?.src || "/mark.png"}>
+<section class="section"><div class="wrap">
+<nav class="breadcrumbs" aria-label="Breadcrumb"><a href="/products">Products</a><span aria-hidden="true">/</span><a href={family.slug}>{family.name}</a><span aria-hidden="true">/</span><span aria-current="page">{p.code}</span></nav>
+<div class={p.images.length?"split":"reading"}><div><p class="eyebrow">{family.name}</p><h1>{p.code}</h1><h2 class="product-name">{p.name}</h2><p class="lede">{p.descriptor}</p><ProductStatus lifecycle={p.lifecycle} note={p.lifecycleNote}/><div class="actions product-actions"><Button href={contact}>Ask about {p.code}</Button><Button href={"/support#"+p.slug} variant="secondary">Product support</Button></div><p class="small">Contact us about configuration and availability. Pricing, package contents and delivery are confirmed individually.</p></div>{p.images[0]&&<figure class="display-stage glow"><img src={p.images[0].src} alt={p.images[0].alt} width="480" height="360" fetchpriority="high"/><figcaption>{p.images[0].caption}</figcaption></figure>}</div>
+</div></section>
+<section class="section"><div class="wrap split"><div><p class="eyebrow">Purpose</p><h2>Built for your setup.</h2><p>{p.audience}</p></div><div><p>{p.summary}</p><ul class="feature-list">{p.capabilities.map(c=><li>{c.claim}{c.status==="planned"&&<strong class="planned"> · Planned</strong>}</li>)}</ul></div></div></section>
+{p.images.length>1&&<section class="section"><div class="wrap"><p class="eyebrow">A closer look</p><h2>{p.id==="brc-02"?"Choose your view.":"On the instrument."}</h2><p>{p.id==="brc-02"?"Four of the ten available dashboard layouts. Firmware-generated display renders with demonstration data; these show the interface, not the enclosure.":"Example interface screens. Screen content illustrates the interface; it is not a live measurement."}</p><div class="grid grid-3 gallery">{p.images.slice(1).map(img=><figure><a href={img.src} aria-label={"Open image: "+img.alt}><img src={img.src} alt={img.alt} width="480" height="360" loading="lazy"/></a><figcaption>{img.caption}</figcaption></figure>)}</div></div></section>}
+<section class="section"><div class="wrap split"><div><p class="eyebrow">Before you choose</p><h2>Compatibility & details.</h2>{p.compatibility&&<ul class="feature-list">{p.compatibility.map(c=><li>{c}</li>)}</ul>}{p.id==="bfd-01"&&<p class="small">The Rev A 100 VDC configuration was bench tested. This is not a CAT safety certification or an AC/mains rating. Confirm the hardware revision and applicable operating limits before use.</p>}{p.id==="brc-02"&&<p>iRacing is the on-track validated setup. Other simulators depend on the telemetry and flags exposed through SimHub. Ask about mounting and your required configuration.</p>}</div><div class="table-wrap"><table><caption>{p.code} · documented build</caption><thead><tr><th scope="col">Feature</th><th scope="col">Details</th></tr></thead><tbody>{p.specs.map(s=><tr><th scope="row">{s.label}</th><td>{s.value}</td></tr>)}</tbody></table></div></div></section>
+{p.gettingStarted&&<section class="section"><div class="wrap split"><h2>Getting started.</h2><ol class="steps">{p.gettingStarted.map(s=><li>{s}</li>)}</ol></div></section>}
+<section class="section closing"><div class="wrap section-heading"><div><p class="eyebrow">Next step</p><h2>Make it fit your setup.</h2><p>Ask about {p.code}, configuration or product support.</p></div><Button href={contact}>Ask about {p.code}</Button></div></section>
+</Base>

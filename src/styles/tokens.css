@@ -1,0 +1,64 @@
+/* BORGAS design tokens.
+   Defined once, as semantic custom properties, per the website brief (04).
+   Every component reads these; nothing hard-codes a colour or a size.
+
+   The values are the brief's proposed website defaults. They sit close to the
+   Device Manager's Theme.cs palette rather than matching it exactly - the
+   brief deliberately proposes a slightly lifted surface set for long-form
+   reading, and that is a website decision, not a product one. */
+
+:root {
+  /* surfaces */
+  --bg-page:        #080C14;
+  --bg-surface:     #101927;
+  --bg-raised:      #152235;
+
+  /* text */
+  --text-primary:   #F4F7FB;
+  --text-secondary: #B1C1D6;
+
+  /* lines */
+  --border-subtle:  #304359;
+  --border-control: #607997;
+
+  /* action */
+  --action-primary: #7C3AED;
+  --action-hover:   #6D28D9;
+
+  /* accents */
+  --accent-cyan:    #47DFF2;
+  --accent-violet:  #B9A0FF;
+  --focus-ring:     #47DFF2;
+
+  /* status - always paired with a text label, never colour alone */
+  --status-positive: #46D9A0;
+  --status-pending:  #F2C66D;
+  --status-error:    #FF929D;
+
+  /* type */
+  --font-heading: "Space Grotesk", "Segoe UI", system-ui, sans-serif;
+  --font-body:    "Inter", "Segoe UI", system-ui, -apple-system, Roboto, sans-serif;
+
+  /* fluid type, brief table in 04 */
+  --fs-hero:    clamp(2.25rem, 1.5rem + 3vw, 4rem);      /* 36 -> 64 */
+  --fs-section: clamp(1.75rem, 1.4rem + 1.4vw, 2.5rem);  /* 28 -> 40 */
+  --fs-h3:      1.375rem;
+  --fs-body:    clamp(1rem, 0.95rem + 0.25vw, 1.125rem);  /* 16 -> 18 */
+  --fs-label:   0.8125rem;                                /* 13 */
+
+  /* spacing scale 4/8/12/16/24/32/48/64/96 */
+  --s-1: 4px;  --s-2: 8px;  --s-3: 12px; --s-4: 16px; --s-6: 24px;
+  --s-8: 32px; --s-12: 48px; --s-16: 64px; --s-24: 96px;
+
+  /* layout */
+  --content-max: 1200px;
+  --gutter: 20px;
+  --section-y: clamp(48px, 4vw + 32px, 104px);
+  --radius-control: 8px;
+  --radius-panel: 12px;
+
+  /* motion */
+  --t-fast: 180ms;
+}
+
+@media (max-width: 360px) { :root { --gutter: 16px; } }
