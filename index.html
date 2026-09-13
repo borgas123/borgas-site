@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>BORGAS</title>
+<meta name="description" content="BORGAS designs and builds field diagnostic instruments and racing electronics.">
+<link rel="icon" href="mark.png">
+<style>
+  /* The Device Manager's palette, exactly - Theme.cs in the BFD-01 repository.
+     The site and the product should read as one thing. */
+  :root {
+    --bg: #050D16; --rail: #06111E; --panel: #06121F; --panel2: #0C1E30;
+    --line: #1C3B54; --line2: #2C5878;
+    --text: #EDF7FF; --mut: #9BB0C7; --dim: #71869E;
+    --acc: #3EE7F2; --accdim: #0E2940; --ok: #4CF2A3;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; background: var(--bg); color: var(--text);
+    font: 16px/1.55 "Segoe UI", system-ui, -apple-system, Roboto, Helvetica, Arial, sans-serif; }
+  a { color: var(--acc); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+
+  .wrap { max-width: 980px; margin: 0 auto; padding: 0 24px; }
+
+  header { padding: 64px 0 40px; border-bottom: 1px solid var(--line); }
+  .mark { width: 160px; height: 137px; background: var(--text);
+    -webkit-mask: url(mark.png) center / contain no-repeat; mask: url(mark.png) center / contain no-repeat; }
+  header h1 { margin: 26px 0 0; font-size: 22px; font-weight: 500; color: var(--mut); max-width: 640px; line-height: 1.4; }
+  header p.tag { margin: 0; color: var(--mut); font-size: 18px; max-width: 640px; }
+
+  section { padding: 44px 0; border-bottom: 1px solid var(--line); }
+  h2 { margin: 0 0 6px; font-size: 13px; letter-spacing: .18em; text-transform: uppercase; color: var(--acc); font-weight: 600; }
+  p.lead { margin: 0 0 26px; color: var(--mut); max-width: 700px; }
+
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 16px; }
+  .card { background: var(--panel); border: 1px solid var(--line); border-radius: 8px; padding: 20px 22px; }
+  .card .code { font-size: 12px; letter-spacing: .14em; color: var(--acc); font-weight: 600; }
+  .card h3 { margin: 6px 0 10px; font-size: 19px; }
+  .card p { margin: 0; color: var(--mut); font-size: 15px; }
+
+  .kv { display: grid; grid-template-columns: 180px 1fr; gap: 10px 20px; max-width: 640px; }
+  .kv dt { color: var(--dim); }
+  .kv dd { margin: 0; }
+
+  footer { padding: 36px 0 56px; color: var(--dim); font-size: 14px; }
+  footer .legal { color: var(--mut); }
+
+  @media (max-width: 560px) {
+    header { padding-top: 40px; }
+    header h1 { font-size: 18px; }
+    .kv { grid-template-columns: 1fr; gap: 4px; }
+    .kv dt { margin-top: 10px; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <div class="mark" role="img" aria-label="BORGAS"></div>
+    <!-- The mark already carries the wordmark, so the heading does not repeat it
+         in 40px type. It still says the name in TEXT, because a validator's
+         crawler reads text and not pixels, and that is what this page is for. -->
+    <h1>BORGAS designs and builds field diagnostic instruments and racing electronics.</h1>
+  </div>
+</header>
+
+<section>
+  <div class="wrap">
+    <h2>Diagnostic Systems</h2>
+    <p class="lead">Instruments for field-service troubleshooting of industrial equipment: independent external measurement, guided tests, event capture and fault isolation that complement a machine's own diagnostics rather than repeating them.</p>
+    <div class="grid">
+      <div class="card">
+        <div class="code">BFD-01</div>
+        <h3>Field Diagnostic Instrument</h3>
+        <p>Handheld voltage, resistance, continuity, digital and frequency measurement with a guided diagnostic library for specific equipment, live capture, and an event log. Updates and configuration through the BORGAS Device Manager.</p>
+      </div>
+      <div class="card">
+        <div class="code">BPS-01</div>
+        <h3>Power System</h3>
+        <p>Rechargeable battery and power subsystem for BORGAS diagnostic equipment in the field, with live battery telemetry on its own display.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <h2>Racing Systems</h2>
+    <p class="lead">Dashboard and signalling hardware for sim racing, driven live from the simulator's telemetry.</p>
+    <div class="grid">
+      <div class="card">
+        <div class="code">BRC-02</div>
+        <h3>Racing Dashboard</h3>
+        <p>Colour dashboard with selectable layouts, RPM and shift lighting, session flags and lap timing, fed over USB from SimHub.</p>
+      </div>
+      <div class="card">
+        <div class="code">BRC-FL</div>
+        <h3>Flag Panel</h3>
+        <p>Companion LED flag panel showing session flags from the same telemetry feed.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <h2>Software</h2>
+    <p class="lead">Every BORGAS instrument is managed by one application.</p>
+    <div class="grid">
+      <div class="card">
+        <div class="code">BORGAS DEVICE MANAGER</div>
+        <h3>Windows application</h3>
+        <p>Detects connected BORGAS devices, reads their identity, and installs verified firmware updates - with checksum verification before anything is written and confirmation of what is running afterwards. Published firmware is distributed from <a href="https://github.com/borgas123/borgas-firmware">github.com/borgas123/borgas-firmware</a>.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <h2>Contact</h2>
+    <dl class="kv">
+      <dt>Email</dt>
+      <dd><a id="mail" href="#">set before publishing</a></dd>
+      <dt>Firmware releases</dt>
+      <dd><a href="https://github.com/borgas123/borgas-firmware">github.com/borgas123/borgas-firmware</a></dd>
+    </dl>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="legal" id="legal">BORGAS</div>
+    <div>Product names and codes are BORGAS product identifiers.</div>
+  </div>
+</footer>
+
+<script>
+  // THE TWO THINGS THAT DEPEND ON THE REGISTRATION, kept in one place so the
+  // page is correct the moment they are known and nothing else has to change.
+  // Fill these in before the domain is pointed at the site.
+  var CONTACT_EMAIL = "";           // e.g. "hello@borgas.example"
+  var LEGAL_NAME    = "";           // exactly as registered, e.g. "BORGAS LLC"
+
+  var m = document.getElementById("mail");
+  if (CONTACT_EMAIL) { m.textContent = CONTACT_EMAIL; m.href = "mailto:" + CONTACT_EMAIL; }
+  else { m.textContent = "coming soon"; m.removeAttribute("href"); }
+  if (LEGAL_NAME) document.getElementById("legal").textContent = LEGAL_NAME;
+</script>
+
+</body>
+</html>
