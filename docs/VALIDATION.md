@@ -18,3 +18,7 @@
 
 Remaining: real email acceptance/delivery test after recipient is supplied; direct server submission backend if desired; manual screen-reader and physical-device testing; live-domain HTTPS/deployment checks; owner review of content/assets.
 Local screenshots and metrics: qa-artifacts (ignored by Git). Production package: qa-artifacts/borgas-site-preview.zip. Existing live site has not been changed.
+
+## Direct Windows downloads — 2026-09-13
+Support now links directly to two installer assets in BORGAS-Windows-Installers-2026-09-13. The release is explicitly not latest, preserving the firmware updater's latest-index source.
+Device Manager installer contains the exact published 1.2.3 app and USB flashing tools. LED installer contains all preview/font assets. Both Chrome downloads completed and stayed on Support; hashes matched published files. Build, type checks and browser/accessibility checks passed. Fresh-PC installation testing remains outstanding.
