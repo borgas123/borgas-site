@@ -12,7 +12,7 @@ export const site = {
 
   // Set once Cloudflare Email Routing (or a mailbox) exists on the domain.
   // NEVER guessed: the brief forbids inventing an address on an assumed domain.
-  contactEmail: "",
+  contactEmail: "hello@borgas.us",
 
   // The runtime endpoint the contact form posts to. Empty means the form is
   // not offered and the page falls back to email (if that exists).
