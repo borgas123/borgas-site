@@ -112,6 +112,8 @@ const all: Product[] = [
     ],
     resources: [],
     images: [
+      {"src":"/images/brc-02/product-render-v1.webp","alt":"BRC-02 navy racing dashboard with cyan and violet LEDs and red and green lap displays, without a stand","caption":"Computer-rendered illustration based on the actual build, shown in the BORGAS color scheme. Demonstration lighting and display."},
+
       { src: "/images/brc-02/layout-rev-ring.png", alt: "BRC-02 rev-ring layout: gear inside a tachometer ring, with water, oil, fuel and lap readouts around it", caption: "Rev Ring layout. Display render generated from the dashboard firmware — demonstration data." },
       { src: "/images/brc-02/layout-twin-dials.png", alt: "BRC-02 twin-dials layout", caption: "Twin Dials layout. Display render — demonstration data." },
       { src: "/images/brc-02/layout-minimal-hud.png", alt: "BRC-02 minimal HUD layout", caption: "Minimal HUD layout. Display render — demonstration data." },
@@ -147,7 +149,9 @@ const all: Product[] = [
       { label: "Power", value: "5 V external supply" },
     ],
     resources: [],
-    images: [],
+    images: [
+      {"src":"/images/brc-fl/product-render-v1.webp","alt":"BRC-FL square 8 by 8 flag panel in navy with violet and cyan rim lighting","caption":"Computer-rendered illustration based on the actual build, shown in the BORGAS color scheme. One flag module shown."},
+],
     publish: true,
   },
 
