@@ -278,12 +278,12 @@ export function byFamily(family: Family): Product[] {
 export const families: Record<Family, { name: string; slug: string; blurb: string }> = {
   racing: {
     name: "Racing Systems",
-    slug: "/racing",
+    slug: "/racing/",
     blurb: "Dashboards and signalling hardware for sim racing, driven live from the simulator.",
   },
   diagnostics: {
     name: "Diagnostic Systems",
-    slug: "/diagnostics",
+    slug: "/diagnostics/",
     blurb: "Instruments for field-service troubleshooting of industrial equipment: external measurement and guided tests that find what the machine's own diagnostics cannot.",
   },
 };

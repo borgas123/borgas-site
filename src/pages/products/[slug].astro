@@ -5,11 +5,11 @@ import ProductStatus from "../../components/ProductStatus.astro";
 import { publicProducts,families } from "../../data/products";
 export function getStaticPaths(){return publicProducts().map(product=>({params:{slug:product.slug},props:{product}}));}
 const {product:p}=Astro.props;const family=families[p.family];
-const contact="/contact?product="+encodeURIComponent(p.code)+"&topic="+encodeURIComponent(p.ordering==="none"?"Product question":"Purchase inquiry");
+const contact="/contact/?product="+encodeURIComponent(p.code)+"&topic="+encodeURIComponent(p.ordering==="none"?"Product question":"Purchase inquiry");
 ---
 <Base title={p.code+" | "+family.name} description={p.descriptor} image={p.images[0]?.src || "/mark.png"}>
 <section class="section"><div class="wrap">
-<nav class="breadcrumbs" aria-label="Breadcrumb"><a href="/products">Products</a><span aria-hidden="true">/</span><a href={family.slug}>{family.name}</a><span aria-hidden="true">/</span><span aria-current="page">{p.code}</span></nav>
+<nav class="breadcrumbs" aria-label="Breadcrumb"><a href="/products/">Products</a><span aria-hidden="true">/</span><a href={family.slug}>{family.name}</a><span aria-hidden="true">/</span><span aria-current="page">{p.code}</span></nav>
 <div class={p.images.length?"split":"reading"}><div><p class="eyebrow">{family.name}</p><h1>{p.code}</h1><h2 class="product-name">{p.name}</h2><p class="lede">{p.descriptor}</p><ProductStatus lifecycle={p.lifecycle} note={p.lifecycleNote}/><div class="actions product-actions"><Button href={contact}>Ask about {p.code}</Button><Button href={"/support#"+p.slug} variant="secondary">Product support</Button></div><p class="small">Contact us about configuration and availability. Pricing, package contents and delivery are confirmed individually.</p></div>{p.images[0]&&<figure class="display-stage glow"><img src={p.images[0].src} alt={p.images[0].alt} width="480" height="360" fetchpriority="high"/><figcaption>{p.images[0].caption}</figcaption></figure>}</div>
 </div></section>
 <section class="section"><div class="wrap split"><div><p class="eyebrow">Purpose</p><h2>Built for your setup.</h2><p>{p.audience}</p></div><div><p>{p.summary}</p><ul class="feature-list">{p.capabilities.map(c=><li>{c.claim}{c.status==="planned"&&<strong class="planned"> · Planned</strong>}</li>)}</ul></div></div></section>

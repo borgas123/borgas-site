@@ -1,12 +1,12 @@
 ---
 import Button from "./Button.astro";
 const path=Astro.url.pathname.replace(/\/$/,"")||"/";
-const items=[["/products","Products"],["/racing","Racing"],["/diagnostics","Diagnostics"],["/support","Support"],["/about","About"]];
+const items=[["/products/","Products"],["/racing/","Racing"],["/diagnostics/","Diagnostics"],["/support/","Support"],["/about/","About"]];
 ---
 <header class="site-header"><div class="wrap header-bar">
 <a class="brand" href="/" aria-label="BORGAS home"><img src="/mark.png" alt="BORGAS" width="511" height="437"/></a>
 <button id="menu-btn" aria-expanded="false" aria-controls="site-nav" type="button" hidden>Menu <span aria-hidden="true">☰</span></button>
-<nav id="site-nav" aria-label="Primary"><ul>{items.map(([href,label])=><li><a href={href} aria-current={path===href||path.startsWith(href+"/")?"page":undefined}>{label}</a></li>)}<li><Button href="/contact">Contact</Button></li></ul></nav>
+<nav id="site-nav" aria-label="Primary"><ul>{items.map(([href,label])=><li><a href={href} aria-current={path===href||path.startsWith(href)?"page":undefined}>{label}</a></li>)}<li><Button href="/contact/">Contact</Button></li></ul></nav>
 </div></header>
 <style>
 .site-header{background:var(--bg-page);border-bottom:1px solid var(--border-subtle)}
