@@ -187,6 +187,8 @@ const all: Product[] = [
         note: "Published releases with checksums. Install through the Device Manager rather than by hand." },
     ],
     images: [
+      { src: "/images/bfd-01/product-render-v1.webp", alt: "BFD-01 in an open navy case with violet and cyan controls, USB-C port and five pairs of red and black terminals", caption: "Computer-rendered illustration based on the actual build, shown in the BORGAS color scheme." },
+
       { src: "/images/bfd-01/faultscope.png", alt: "BFD-01 FaultScope screen showing the Any Event trigger and pre-trigger capture settings", caption: "FaultScope. Instrument interface example." },
       { src: "/images/bfd-01/event-log.png", alt: "BFD-01 event log", caption: "Event log. Instrument interface example." },
     ],
@@ -219,7 +221,9 @@ const all: Product[] = [
       { label: "Hardware revision", value: "Rev A prototype" },
     ],
     resources: [],
-    images: [],
+    images: [
+      { src: "/images/bps-01/product-render-v1.webp", alt: "BPS-01 navy battery supply with a square display and violet power button", caption: "Computer-rendered illustration based on the actual build, shown in the BORGAS color scheme." },
+],
     publish: true,
   },
 

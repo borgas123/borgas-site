@@ -6,3 +6,5 @@
 Equipment-specific guided-test and main-menu screenshots have been kept outside public assets pending public distribution review.
 
 Missing: current BRC-02 product photos or authoritative CAD renders, connectors/mounting detail, real workbench photography, approved white/raven-only logo variants and 1200 x 630 social image. None was invented. Current social metadata uses the complete original logo, which may be cropped by social platforms.
+
+2026-09-13: Added BPS-01 and BFD-01 product-render-v1.webp, generated with the built-in image tool from owner-supplied hardware photos. Recolored navy/violet/cyan at owner request; BFD isolated from battery and cables, USB-C corrected per owner. Illustrative renders, not photos or a promise of available enclosure colors. Originals retained in the local image-generation output; website copies compressed as WebP.
