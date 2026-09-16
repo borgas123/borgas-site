@@ -32,3 +32,46 @@ Automated API integration tests use an in-memory SQLite database and mocked PayP
 
 ## Restricted Sandbox test mode
 SANDBOX_TEST_MODE=true works only with PAYPAL_ENV=sandbox and a SANDBOX_TEST_EMAIL secret. Only that verified email can create/capture test orders or use /sandbox/check. CHECKOUT_ENABLED stays false, so changing PAYPAL_ENV to live does not enable sales. Test shipping/tax are fixed at USD 10/12, explicitly labeled in the UI, and never used in live mode. Payment environment is stored on each order. SANDBOX_PREVIEW_ORIGIN allows the local preview only while PAYPAL_ENV=sandbox. Disable test mode after validation.
+
+## Separate production environment
+
+The Sandbox Worker and database must remain available for regression tests:
+
+- Worker: `borgas-commerce`
+- D1: `borgas-orders`
+- Endpoint: `https://borgas-commerce.borgas-site.workers.dev`
+
+Production is isolated through the Wrangler `production` environment:
+
+- Worker: `borgas-commerce-production`
+- D1: `borgas-orders-production`
+- Endpoint: `https://borgas-commerce-production.borgas-site.workers.dev`
+
+Run production commands with `--env production`. Omitting the environment targets Sandbox. Never point the website at the production endpoint until its `/config` response has been intentionally verified.
+
+Production checkout remains fail-closed until all of these are true:
+
+- `CHECKOUT_ENABLED=true` and `PAYPAL_ENV=live`
+- Live PayPal client ID, secret, merchant ID and webhook ID are present
+- `DELIVERY_QUOTE_URL` is HTTPS and `DELIVERY_QUOTE_TOKEN` is stored as a Worker secret
+- `POLICIES_APPROVED=true` after the public shipping/return/privacy wording is finalized
+- `AUTH_EMAIL_READY=true` after Supabase custom SMTP has been configured and tested
+- Inventory contains sufficient unreserved stock
+
+Store `PAYPAL_SECRET` and `DELIVERY_QUOTE_TOKEN` as Cloudflare secrets. Live client, merchant and webhook IDs are environment configuration, not Sandbox values. The Live PayPal webhook URL is `https://borgas-commerce-production.borgas-site.workers.dev/webhook` and must subscribe to `PAYMENT.CAPTURE.COMPLETED`.
+
+### Inventory
+
+Migration `0003_inventory_reservations.sql` creates inventory rows with zero stock. Setting stock is a deliberate production operation. For example, after physically counting finished units, update each SKU with a parameterized admin command or the D1 dashboard; never change `reserved` manually.
+
+At order creation, D1 atomically reserves stock for 30 minutes. A failed PayPal order releases it, an expired checkout releases it, and a verified capture consumes it once. Database constraints prevent `reserved` from exceeding `on_hand`. The production Worker checks availability again before both quote and reservation.
+
+Before enabling checkout, verify:
+
+```sql
+SELECT sku, on_hand, reserved FROM inventory ORDER BY sku;
+```
+
+### Production checks
+
+Run `npm run test:commerce`, `npm run check`, `npm run build`, and `npm run build:commerce:production`. Apply all migrations to `borgas-orders-production`. Confirm the production `/config` endpoint still returns `checkoutEnabled:false` while any launch gate is incomplete. Only after a controlled Live purchase and refund test should GitHub's `PUBLIC_COMMERCE_API_URL` be changed from Sandbox to the production endpoint.

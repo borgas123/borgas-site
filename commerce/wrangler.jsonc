@@ -23,5 +23,34 @@
       "migrations_dir": "migrations"
     }
   ],
+  "env": {
+    "production": {
+      "name": "borgas-commerce-production",
+      "vars": {
+        "SITE_ORIGIN": "https://borgas.us",
+        "CHECKOUT_ENABLED": "false",
+        "PAYPAL_ENV": "live",
+        "PAYPAL_CLIENT_ID": "",
+        "PAYPAL_WEBHOOK_ID": "",
+        "PAYPAL_MERCHANT_ID": "",
+        "SUPABASE_URL": "https://gvatytfbxjtrvyujqdvn.supabase.co",
+        "SUPABASE_PUBLISHABLE_KEY": "sb_publishable_Gtf9a2JQLuFnCnTPbT32FA_CQfETPAu",
+        "SANDBOX_TEST_MODE": "false",
+        "SANDBOX_PREVIEW_ORIGIN": "",
+        "POLICIES_APPROVED": "false",
+        "AUTH_EMAIL_READY": "false",
+        "SUPPORT_EMAIL": "hello@borgas.us",
+        "WEBHOOK_URL": "https://borgas-commerce-production.borgas-site.workers.dev/webhook"
+      },
+      "d1_databases": [
+        {
+          "binding": "DB",
+          "database_name": "borgas-orders-production",
+          "database_id": "b57be66d-b1c3-4f73-b2c1-45d3be38ae6a",
+          "migrations_dir": "migrations"
+        }
+      ]
+    }
+  },
   "account_id": "870fd8f77912e0cb06d5fff5c04e7cb4"
 }
