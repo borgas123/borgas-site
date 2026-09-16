@@ -29,12 +29,12 @@
 
 ## PayPal Live
 
-- [ ] Create or select the BORGAS Store Live REST app
-- [ ] Store its secret as the production Worker's `PAYPAL_SECRET`
-- [ ] Set the Live client ID and merchant ID in `env.production.vars`
-- [ ] Create the Live webhook for `PAYMENT.CAPTURE.COMPLETED`
-- [ ] Set the Live webhook ID in `env.production.vars`
-- [ ] Verify the webhook URL is `https://borgas-commerce-production.borgas-site.workers.dev/webhook`
+- [x] Create the BORGAS Store Live REST app
+- [x] Store its secret as the production Worker's `PAYPAL_SECRET`
+- [x] Set the Live client ID and merchant ID in `env.production.vars`
+- [x] Create the Live webhook for `PAYMENT.CAPTURE.COMPLETED`
+- [x] Set the Live webhook ID in `env.production.vars`
+- [x] Verify the webhook URL is `https://borgas-commerce-production.borgas-site.workers.dev/webhook`
 
 ## Delivery and tax
 
