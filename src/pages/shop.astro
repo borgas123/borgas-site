@@ -1,0 +1,16 @@
+---
+import Base from '../layouts/Base.astro';
+import catalog from '../../shared/catalog.json';
+import '../styles/commerce.css';
+const money=(cents:number)=>new Intl.NumberFormat('en-US',{style:'currency',currency:'USD'}).format(cents/100);
+---
+<Base title="Shop" description="Shop BORGAS hardware: the BRC-02 racing dashboard and BFD-01 generic field diagnostic instrument.">
+<section class="section"><div class="wrap"><div class="shop-heading"><p class="eyebrow">BORGAS / Shop</p><h1>Built with purpose.<br/>Choose yours.</h1><p class="lede">From your racing rig to your workbench.</p><p class="notice">Online ordering is being prepared. You can build your cart now; payment is not yet available.</p></div>
+<div class="shop-grid">{catalog.map(p=><article class="shop-card" id={p.sku}><figure><a href={p.href} aria-label={'Explore '+p.name}><img src={p.image} alt={p.name+' product illustration'} width="480" height="360"/></a><figcaption>Product render · illustrative configuration</figcaption></figure><div class="shop-body"><p class="eyebrow">{p.sku==='brc-02'?'Racing systems':'Diagnostic systems'}</p><h2>{p.name}</h2><p>{p.subtitle}</p><p>{p.description}</p><p class="shop-price">{money(p.price)} <small>USD · before shipping and tax</small></p><div class="actions"><button class="shop-btn" data-add={p.sku}>Add to cart</button><a href={p.href}>Product details ↗</a></div></div></article>)}</div>
+<p id="shop-status" class="shop-status" role="status" aria-live="polite"></p><div class="actions"><a class="shop-btn secondary" href="/cart/">View cart</a><a href="/account/">Your account</a></div><p class="shop-note">Package contents, shipping availability and delivery terms will be confirmed before checkout opens. Questions? <a href="/contact/">Contact BORGAS.</a></p><noscript><p>Enable JavaScript to use the cart, or contact BORGAS about a product.</p></noscript></div></section>
+</Base>
+<script>
+import {add,catalog} from '../lib/commerce';
+document.querySelectorAll<HTMLButtonElement>('[data-add]').forEach(button=>button.addEventListener('click',()=>{const sku=button.dataset.add!;const added=add(sku);document.querySelector('#shop-status')!.textContent=added?(catalog.find(p=>p.sku===sku)?.name+' added to your cart.'):'You can add up to 10 of this product.';}));
+document.addEventListener('cart-storage-unavailable',()=>{document.querySelector('#shop-status')!.textContent='Browser storage is unavailable. Your cart cannot be saved between pages.';});
+</script>
