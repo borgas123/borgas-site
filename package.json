@@ -14,7 +14,8 @@
     "test:site": "astro preview --host 127.0.0.1 --port 4322 --background && playwright test",
     "test:contact": "node tools/check-contact.mjs",
     "test:commerce": "node --test --test-isolation=none commerce/*.test.mjs",
-    "build:commerce": "wrangler deploy --dry-run --config commerce/wrangler.jsonc --outdir .wrangler/build"
+    "build:commerce": "wrangler deploy --dry-run --env=\"\" --config commerce/wrangler.jsonc --outdir .wrangler/build",
+    "build:commerce:production": "wrangler deploy --dry-run --env production --config commerce/wrangler.jsonc --outdir .wrangler/build-production"
   },
   "dependencies": {
     "@astrojs/sitemap": "^3.7.4",
