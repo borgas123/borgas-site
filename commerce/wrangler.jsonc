@@ -41,7 +41,7 @@
         "SALES_TAX_STATE": "MA",
         "SALES_TAX_BPS": "625",
         "POLICIES_APPROVED": "false",
-        "AUTH_EMAIL_READY": "false",
+        "AUTH_EMAIL_READY": "true",
         "SUPPORT_EMAIL": "hello@borgas.us",
         "WEBHOOK_URL": "https://borgas-commerce-production.borgas-site.workers.dev/webhook"
       },

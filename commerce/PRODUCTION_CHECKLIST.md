@@ -22,10 +22,10 @@
 
 ## Customer email
 
-- [ ] Configure a production SMTP provider in Supabase Auth
-- [ ] Verify SPF, DKIM and DMARC for the chosen sending domain or subdomain
-- [ ] Test passwordless sign-in with a non-team customer address
-- [ ] Set `AUTH_EMAIL_READY=true` only after successful delivery
+- [x] Configure a production SMTP provider in Supabase Auth
+- [x] Verify SPF, DKIM and DMARC for the chosen sending domain or subdomain
+- [x] Test passwordless sign-in with a non-team customer address
+- [x] Set `AUTH_EMAIL_READY=true` only after successful delivery
 
 ## PayPal Live
 
