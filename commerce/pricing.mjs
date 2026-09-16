@@ -1,6 +1,7 @@
 import catalog from '../shared/catalog.json' with {type:'json'};
 export class PublicError extends Error {constructor(message,status=400){super(message);this.status=status;}}
 export const dollars=cents=>(cents/100).toFixed(2);
+const usStates=new Set('AL AK AZ AR CA CO CT DE FL GA HI ID IL IN IA KS KY LA ME MD MA MI MN MS MO MT NE NV NH NJ NM NY NC ND OH OK OR PA RI SC SD TN TX UT VT VA WA WV WI WY DC'.split(' '));
 export function items(lines){
  if(!Array.isArray(lines)||!lines.length||lines.length>catalog.length)throw new PublicError('Choose at least one product.');
  const seen=new Set();return lines.map(line=>{const p=catalog.find(p=>p.sku===line?.sku);if(!p||seen.has(p.sku)||!Number.isInteger(line.quantity)||line.quantity<1||line.quantity>10)throw new PublicError('Invalid product or quantity.');seen.add(p.sku);return {sku:p.sku,name:p.name+' '+p.subtitle,quantity:line.quantity,price:p.price};});
@@ -15,7 +16,7 @@ export function discountFor(subtotal,coupon,now=Date.now()){
 export function normalizeAddress(a){
  if(!a||typeof a!=='object')throw new PublicError('Enter your delivery address.');
  const result={};for(const [key,max] of Object.entries({fullName:100,addressLine1:200,addressLine2:200,city:100,state:2,postalCode:10})){const value=typeof a[key]==='string'?a[key].trim():'';if((key!=='addressLine2'&&!value)||value.length>max||/[\x00-\x1f]/.test(value))throw new PublicError('Check your delivery address.');result[key]=value;}
- result.state=result.state.toUpperCase();if(!/^[A-Z]{2}$/.test(result.state)||!/^\d{5}(-\d{4})?$/.test(result.postalCode))throw new PublicError('Use a US state code and valid ZIP code.');return result;
+ result.state=result.state.toUpperCase();if(!usStates.has(result.state)||!/^\d{5}(-\d{4})?$/.test(result.postalCode))throw new PublicError('Use a valid US state code and ZIP code.');return result;
 }
 export function calculate(lines,coupon,delivery){
  const normalized=items(lines);const subtotal=normalized.reduce((s,l)=>s+l.quantity*l.price,0);const discount=discountFor(subtotal,coupon);

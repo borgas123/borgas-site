@@ -1,7 +1,8 @@
 import {PublicError,items,discountFor,normalizeAddress,calculate,dollars,validCapture} from './pricing.mjs';
 const json=(value,status=200)=>new Response(JSON.stringify(value),{status,headers:{'Content-Type':'application/json','Cache-Control':'no-store'}});
 function sandboxMode(env){return env.PAYPAL_ENV==='sandbox'&&env.SANDBOX_TEST_MODE==='true'&&!!env.SANDBOX_TEST_EMAIL;}
-function ready(env){const credentials=!!(env.DB&&env.PAYPAL_CLIENT_ID&&(env.PAYPAL_SECRET||env.Paypal_Secret)&&env.PAYPAL_MERCHANT_ID&&env.PAYPAL_WEBHOOK_ID&&env.SUPABASE_URL&&env.SUPABASE_PUBLISHABLE_KEY);const liveOperations=env.PAYPAL_ENV!=='live'||env.POLICIES_APPROVED==='true'&&env.AUTH_EMAIL_READY==='true';return credentials&&liveOperations&&(sandboxMode(env)||(env.CHECKOUT_ENABLED==='true'&&!!env.DELIVERY_QUOTE_URL&&!!env.DELIVERY_QUOTE_TOKEN&&['sandbox','live'].includes(env.PAYPAL_ENV)));}
+function builtInDelivery(env){const rate=Number(env.SALES_TAX_BPS);return env.FREE_US_SHIPPING==='true'&&/^[A-Z]{2}$/.test(env.SALES_TAX_STATE||'')&&/^\d+$/.test(env.SALES_TAX_BPS||'')&&Number.isSafeInteger(rate)&&rate>=0&&rate<=10000;}
+function ready(env){const credentials=!!(env.DB&&env.PAYPAL_CLIENT_ID&&(env.PAYPAL_SECRET||env.Paypal_Secret)&&env.PAYPAL_MERCHANT_ID&&env.PAYPAL_WEBHOOK_ID&&env.SUPABASE_URL&&env.SUPABASE_PUBLISHABLE_KEY);const liveOperations=env.PAYPAL_ENV!=='live'||env.POLICIES_APPROVED==='true'&&env.AUTH_EMAIL_READY==='true';const delivery=builtInDelivery(env)||!!env.DELIVERY_QUOTE_URL&&!!env.DELIVERY_QUOTE_TOKEN;return credentials&&liveOperations&&(sandboxMode(env)||(env.CHECKOUT_ENABLED==='true'&&delivery&&['sandbox','live'].includes(env.PAYPAL_ENV)));}
 function requireTester(env,owner){if(sandboxMode(env)&&owner.email.toLowerCase()!==env.SANDBOX_TEST_EMAIL.trim().toLowerCase())throw new PublicError('Sandbox checkout is restricted to the test account.',403);}
 async function body(request){const raw=await request.text();if(raw.length>16000)throw new PublicError('Request too large.',413);try{return JSON.parse(raw);}catch{throw new PublicError('Invalid request.');}}
 async function user(request,env){const header=request.headers.get('Authorization')||'';if(!header.startsWith('Bearer ')||header.length>8192)throw new PublicError('Please sign in to continue.',401);if(!env.SUPABASE_URL||!env.SUPABASE_PUBLISHABLE_KEY)throw new PublicError('Customer sign-in is not connected yet.',503);
@@ -10,6 +11,7 @@ async function coupon(env,code){if(!code)return null;if(sandboxMode(env)&&code==
 async function quote(env,input){const lines=items(input.lines);const c=await coupon(env,input.code);const subtotal=lines.reduce((s,l)=>s+l.price*l.quantity,0);const discount=discountFor(subtotal,c);const address=normalizeAddress(input.address);
  if(sandboxMode(env))return {...calculate(input.lines,c,{shipping:1000,tax:1200}),address,code:input.code||'',environment:'sandbox',testFees:true};
  await requireInventory(env,lines);
+ if(builtInDelivery(env)){const tax=address.state===env.SALES_TAX_STATE?Math.round((subtotal-discount)*Number(env.SALES_TAX_BPS)/10000):0;return {...calculate(input.lines,c,{shipping:0,tax}),address,code:input.code||'',environment:env.PAYPAL_ENV};}
  // An authenticated merchant-controlled adapter must return a confirmed shipping/tax quote.
  // No default zero tax or free shipping. It also checks sale availability and supported destinations.
  if(!env.DELIVERY_QUOTE_URL?.startsWith('https://'))throw new PublicError('Delivery is not configured.',503);

@@ -12,11 +12,12 @@
 
 ## Business settings required
 
-- [ ] Confirm which US destinations BORGAS will ship to
-- [ ] Choose flat-rate, free or carrier-calculated shipping and confirm package weights/dimensions
-- [ ] Identify sales-tax nexus states and connect an automated calculation provider
-- [ ] Enter physical stock for `brc-02` and `bfd-01-generic`
-- [ ] Approve processing-time, shipping, return, refund and warranty wording
+- [x] Confirm US-only destinations
+- [x] Offer free shipping to the 50 states and Washington, DC
+- [x] Record Massachusetts as the initial sales-tax nexus at 6.25%
+- [x] Enter physical stock: 2 `brc-02` and 2 `bfd-01-generic`
+- [x] Publish 2–3 business-day processing and a 30-day return window
+- [ ] Confirm final refund/warranty wording
 - [ ] Set `POLICIES_APPROVED=true` only after those pages are published
 
 ## Customer email
@@ -35,12 +36,13 @@
 - [ ] Set the Live webhook ID in `env.production.vars`
 - [ ] Verify the webhook URL is `https://borgas-commerce-production.borgas-site.workers.dev/webhook`
 
-## Delivery quote service
+## Delivery and tax
 
-- [ ] Deploy an authenticated HTTPS adapter that confirms availability, shipping and tax
-- [ ] Store its bearer token as `DELIVERY_QUOTE_TOKEN`
-- [ ] Set `DELIVERY_QUOTE_URL` in the production Worker
-- [ ] Test unsupported ZIP codes, out-of-stock products, discounts, tax and shipping failures
+- [x] Configure free US shipping
+- [x] Configure 6.25% Massachusetts sales tax after discounts and zero tax outside the recorded nexus
+- [ ] Confirm Massachusetts sales-tax registration before opening checkout
+- [x] Test invalid states, out-of-stock products, discounts and Massachusetts tax rounding
+- [ ] Connect an address-level tax service before adding any nexus state beyond Massachusetts
 
 ## Opening checkout
 
