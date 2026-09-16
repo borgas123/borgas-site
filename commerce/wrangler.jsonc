@@ -1,0 +1,27 @@
+{
+  "name": "borgas-commerce",
+  "main": "worker.mjs",
+  "compatibility_date": "2026-09-15",
+  "vars": {
+    "SITE_ORIGIN": "https://borgas.us",
+    "CHECKOUT_ENABLED": "false",
+    "PAYPAL_ENV": "sandbox",
+    "SUPABASE_URL": "https://gvatytfbxjtrvyujqdvn.supabase.co",
+    "SUPABASE_PUBLISHABLE_KEY": "sb_publishable_Gtf9a2JQLuFnCnTPbT32FA_CQfETPAu",
+    "PAYPAL_CLIENT_ID": "BAA1tsq9AfOU8jyUcjsB5Fucs-YSQX9q3op5fv70RNyK2hN8fMOfdHpUZgsxPr1TNr-puVJjIiZ0ZdLHrg",
+    "PAYPAL_WEBHOOK_ID": "8WY82240AF5787227",
+    "PAYPAL_MERCHANT_ID": "PMQTBZSFQFWM8",
+    "SANDBOX_TEST_MODE": "true",
+    "SANDBOX_PREVIEW_ORIGIN": "http://127.0.0.1:4322",
+    "WEBHOOK_URL": "https://borgas-commerce.borgas-site.workers.dev/webhook"
+  },
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "borgas-orders",
+      "database_id": "c6a58eac-ea1f-4ab8-8d79-a9eee0a7315b",
+      "migrations_dir": "migrations"
+    }
+  ],
+  "account_id": "870fd8f77912e0cb06d5fff5c04e7cb4"
+}

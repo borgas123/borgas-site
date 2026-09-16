@@ -1,0 +1,20 @@
+[
+  {
+    "sku": "brc-02",
+    "name": "BRC-02",
+    "subtitle": "Racing dashboard",
+    "price": 14999,
+    "image": "/images/brc-02/product-render-v1.webp",
+    "href": "/products/brc-02/",
+    "description": "Telemetry, shift lighting and session flags, together at the wheel."
+  },
+  {
+    "sku": "bfd-01-generic",
+    "name": "BFD-01",
+    "subtitle": "Generic version",
+    "price": 44999,
+    "image": "/images/bfd-01/product-render-v1.webp",
+    "href": "/products/bfd-01/",
+    "description": "A field diagnostic instrument for measurement and signal capture."
+  }
+]
