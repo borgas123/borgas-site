@@ -1,0 +1,131 @@
+---
+// BORGAS Asset Creator - software product page. Release, price and purchase
+// facts come from src/data/bac.ts; update that file with every release.
+import Base from "../../layouts/Base.astro";
+import Button from "../../components/Button.astro";
+import ProductStatus from "../../components/ProductStatus.astro";
+import { productBySlug, families } from "../../data/products";
+import { bac } from "../../data/bac";
+import { site } from "../../data/site";
+
+const p = productBySlug("asset-creator")!;
+const family = families[p.family];
+const buyHref = "/contact/?product=BAC&topic=" + encodeURIComponent("Purchase inquiry");
+const mailBuy = `mailto:${site.contactEmail}?subject=${encodeURIComponent("BORGAS Asset Creator license")}&body=${encodeURIComponent("Hi BORGAS,\n\nI'd like to buy a BORGAS Asset Creator license.\n\nName for the license:\nMy state (for sales tax):\n\nThanks!")}`;
+const usd = (n: number) => "$" + n.toLocaleString("en-US");
+---
+<Base title="BORGAS Asset Creator | Software" description={p.descriptor} image={p.images[0].src}>
+<section class="section"><div class="wrap">
+  <nav class="breadcrumbs" aria-label="Breadcrumb"><a href="/products/">Products</a><span aria-hidden="true">/</span><a href={family.slug}>{family.name}</a><span aria-hidden="true">/</span><span aria-current="page">Asset Creator</span></nav>
+  <div class="split">
+    <div>
+      <p class="eyebrow">{family.name} · Windows</p>
+      <h1>BORGAS Asset Creator</h1>
+      <p class="lede">{p.descriptor}</p>
+      <ProductStatus lifecycle={p.lifecycle} note={p.lifecycleNote}/>
+      <div class="bac-price" aria-label="Price">
+        <p><strong>{usd(bac.launchPrice)}</strong> <span>launch price for the first {bac.launchLimit} buyers, then {usd(bac.regularPrice)}</span></p>
+        <p class="small">One-time purchase · runs on your own NVIDIA GPU · no subscription, no cloud credits{bac.launchLeft !== null && <> · <strong>{bac.launchLeft} of {bac.launchLimit}</strong> launch licenses left</>}</p>
+      </div>
+      <div class="actions product-actions">
+        <Button href={bac.download}>Download for Windows</Button>
+        <Button href={bac.checkoutLive ? "/shop/#bac" : buyHref} variant="secondary">Buy a license</Button>
+      </div>
+      <p class="small">Version {bac.version} · {bac.sizeMB} MB installer · digitally signed by {bac.publisher}. Free to download and set up; generating, finishing, exporting and quality checks need a license key.</p>
+    </div>
+    <figure class="display-stage glow"><img src={p.images[0].src} alt={p.images[0].alt} width="1440" height="900" fetchpriority="high"/><figcaption>{p.images[0].caption}</figcaption></figure>
+  </div>
+</div></section>
+
+<section class="section"><div class="wrap split">
+  <div><p class="eyebrow">Purpose</p><h2>From concept views to your engine.</h2><p>{p.audience}</p><p>{p.summary}</p></div>
+  <div><ul class="feature-list">{p.capabilities.map(c => <li>{c.claim}{c.status === "planned" && <strong class="planned"> · Planned</strong>}</li>)}</ul></div>
+</div></section>
+
+<section class="section"><div class="wrap split">
+  <div class="bac-models">
+    {p.images.slice(1).map(img => <figure><img src={img.src} alt={img.alt} width="384" height="384" loading="lazy"/><figcaption>{img.caption}</figcaption></figure>)}
+    <p class="small bac-models-note">Thumbnails saved by BAC with each generated model, straight from the generator before finishing.</p>
+  </div>
+  <div>
+    <p class="eyebrow">Honest results</p><h2>Game ready means it passed.</h2>
+    <p>BAC only labels an asset <strong>Game ready</strong> after every check has actually run and passed: its own quality checks, an automatic import into Unreal Engine 5, and for characters a retarget onto the UE5 mannequin and a pose review that you sign off yourself.</p>
+    <p>AI-generated models vary from run to run. Some need a second try, a different seed or a cleanup pass, which is why BAC can generate four candidates at once and keeps every version. Treat results as a strong starting point that a 3D artist can refine.</p>
+  </div>
+</div></section>
+
+<section class="section"><div class="wrap split">
+  <div>
+    <p class="eyebrow">Before you buy</p><h2>System requirements.</h2>
+    <ul class="feature-list">
+      <li><strong>Windows 10 or 11, 64-bit.</strong> Mac and Linux are not supported.</li>
+      <li><strong>An NVIDIA graphics card (CUDA).</strong> Tested on an RTX 4070 Ti SUPER with 16 GB. The Draft, Standard and High presets are designed for cards with 8 GB or more; 16 GB is recommended, and the Maximum preset needs 24 GB. AMD, Intel and Apple graphics are not supported.</li>
+      <li><strong>About 50 GB of free disk space</strong> for the app, the 3D engine and its model files (about 14 GB of models), plus room for your projects.</li>
+      <li><strong>Internet for first-time setup</strong>, which downloads the engine and models. After that BAC works offline.</li>
+      <li><strong>A free Hugging Face account with access to Meta's DINOv3 model.</strong> BAC's setup walks you through it; access is approved by Meta, not BORGAS, so request it before you buy.</li>
+      <li><strong>Optional:</strong> Blender 4.5 (BAC's setup can install it) for finishing and rigging, and Unreal Engine 5 for the automatic Unreal checks.</li>
+    </ul>
+  </div>
+  <div class="table-wrap"><table><caption>BORGAS Asset Creator {bac.version}</caption><thead><tr><th scope="col">Item</th><th scope="col">Details</th></tr></thead><tbody>
+    {p.specs.map(s => <tr><th scope="row">{s.label}</th><td>{s.value}</td></tr>)}
+    <tr><th scope="row">License</th><td>One person; install on the computers you use</td></tr>
+    <tr><th scope="row">Updates</th><td>All 1.x updates included, delivered inside the app</td></tr>
+    <tr><th scope="row">Support</th><td><a href={"mailto:" + site.contactEmail}>{site.contactEmail}</a></td></tr>
+  </tbody></table></div>
+</div></section>
+
+<section class="section"><div class="wrap split">
+  <div>
+    <p class="eyebrow">What you get</p><h2>Buy once, keep updating.</h2>
+    <ul class="feature-list">
+      <li>A license key sent by email, usually within 24 hours during launch</li>
+      <li>The signed BORGAS Asset Creator installer for Windows</li>
+      <li>All 1.x updates at no extra cost; BAC checks for them from Settings</li>
+      <li>Email support at {site.contactEmail}</li>
+    </ul>
+    {!bac.checkoutLive && <p class="notice">Online checkout for BAC is not open yet. To buy now at the launch price, email <a href={mailBuy}>{site.contactEmail}</a> or use the <a href={buyHref}>contact form</a>. We'll send a PayPal invoice, then your license key. Massachusetts buyers are charged 6.25% sales tax.</p>}
+  </div>
+  <div>
+    <h2>Getting started.</h2>
+    <ol class="steps">
+      <li>Request DINOv3 access on Hugging Face (free).</li>
+      <li>Download and run the installer. Choose where to install it and which shortcuts to add.</li>
+      <li>Open BAC, go to <strong>Settings → License</strong>, and paste your key.</li>
+      <li>Open the <strong>Engine</strong> page to install the 3D engine (one-time download, about 14 GB).</li>
+      <li>Add four reference views on the <strong>References</strong> page and generate.</li>
+    </ol>
+  </div>
+</div></section>
+
+<section class="section"><div class="wrap reading">
+  <p class="eyebrow">Questions</p><h2>Good to know.</h2>
+  <h3>Can I try it before buying?</h3>
+  <p>You can download BAC, install it and run the engine setup to confirm it works on your computer. Generating, finishing, exporting and quality checks need a license key.</p>
+  <h3>Do I own what I make?</h3>
+  <p>Yes. The 3D models you create are yours. The AI models BAC uses have their own licenses, including Meta's DINOv3 license, which you accept on Hugging Face.</p>
+  <h3>Does it send my images anywhere?</h3>
+  <p>No. Generation runs entirely on your computer. BAC goes online only for setup downloads, for update checks when you ask, and once a day to check for revoked license keys.</p>
+  <h3>Windows or my browser warns about the download.</h3>
+  <p>The installer is digitally signed by {bac.publisher}. A brand-new release can show a "not commonly downloaded" notice for a while; make sure you downloaded it from borgas.us. Its SHA-256 is <code class="bac-hash">{bac.sha256}</code>.</p>
+  <h3>Can I move BAC to a new computer?</h3>
+  <p>Yes. Install it there and paste the same key.</p>
+</div></section>
+
+<section class="section closing"><div class="wrap section-heading">
+  <div><p class="eyebrow">Next step</p><h2>Turn your concept art into assets.</h2><p>{usd(bac.launchPrice)} for the first {bac.launchLimit} buyers. Questions first? Write to {site.contactEmail}.</p></div>
+  <div class="actions"><Button href={bac.download}>Download for Windows</Button><Button href={bac.checkoutLive ? "/shop/#bac" : buyHref} variant="secondary">Buy a license</Button></div>
+</div></section>
+</Base>
+
+<style>
+  .bac-price { margin: var(--s-4) 0 var(--s-3); }
+  .bac-price p { margin: 0 0 var(--s-1); }
+  .bac-price strong { font-size: 2rem; color: var(--text-primary); }
+  .bac-price span { color: var(--text-secondary); }
+  .bac-models { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--s-4); align-content: start; }
+  .bac-models figure { margin: 0; }
+  .bac-models img { width: 100%; height: auto; aspect-ratio: 1; border-radius: var(--radius-control); border: 1px solid var(--border-subtle); background: #0b0e12; }
+  .bac-models figcaption { font-size: var(--fs-label); color: var(--text-secondary); margin-top: var(--s-2); }
+  .bac-models-note { grid-column: 1 / -1; margin: 0; }
+  .bac-hash { word-break: break-all; font-size: 0.85em; }
+</style>
