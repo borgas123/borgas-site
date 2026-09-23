@@ -17,7 +17,7 @@
 - [x] Record Massachusetts as the initial sales-tax nexus at 6.25%
 - [x] Enter physical stock: 2 `brc-02` and 2 `bfd-01-generic`
 - [x] Publish 2–3 business-day processing and a 30-day return window
-- [ ] Confirm final refund/warranty wording
+- [x] Confirm final refund/warranty wording (BAC: /bac/refunds/ and /bac/license/, approved 2026-09-23)
 - [ ] Set `POLICIES_APPROVED=true` only after those pages are published
 
 ## Customer email

@@ -2,7 +2,7 @@
 import AxeBuilder from '@axe-core/playwright';
 import fs from 'node:fs';
 import path from 'node:path';
-const routes=['/','/products/','/racing/','/diagnostics/','/software/','/products/asset-creator/','/products/brc-02/','/products/brc-fl/','/products/bfd-01/','/products/bps-01/','/support/','/about/','/contact/','/privacy/','/404.html'];
+const routes=['/','/products/','/racing/','/diagnostics/','/software/','/products/asset-creator/','/products/brc-02/','/products/brc-fl/','/products/bfd-01/','/products/bps-01/','/support/','/about/','/contact/','/privacy/','/bac/license/','/bac/refunds/','/404.html'];
 test('every page: responsive reflow, accessibility, headings and local destinations',async({page})=>{
  fs.mkdirSync('qa-artifacts',{recursive:true});
  const errors:string[]=[];page.on('pageerror',e=>errors.push(e.message));

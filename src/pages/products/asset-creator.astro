@@ -83,6 +83,7 @@ const usd = (n: number) => "$" + n.toLocaleString("en-US");
       <li>All 1.x updates at no extra cost; BAC checks for them from Settings</li>
       <li>Email support at {site.contactEmail}</li>
     </ul>
+    <p class="small">14-day refunds if BAC won't run on your computer, or if you change your mind before generating anything. Read the <a href="/bac/refunds/">refund policy</a> and <a href="/bac/license/">license agreement</a>.</p>
     {!bac.checkoutLive && <p class="notice">Online checkout for BAC is not open yet. To buy now at the launch price, email <a href={mailBuy}>{site.contactEmail}</a> or use the <a href={buyHref}>contact form</a>. We'll send a PayPal invoice, then your license key. Massachusetts buyers are charged 6.25% sales tax.</p>}
   </div>
   <div>
