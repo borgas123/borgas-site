@@ -2,7 +2,7 @@
 import AxeBuilder from '@axe-core/playwright';
 import fs from 'node:fs';
 import path from 'node:path';
-const routes=['/','/products/','/racing/','/diagnostics/','/products/brc-02/','/products/brc-fl/','/products/bfd-01/','/products/bps-01/','/support/','/about/','/contact/','/privacy/','/404.html'];
+const routes=['/','/products/','/racing/','/diagnostics/','/software/','/products/asset-creator/','/products/brc-02/','/products/brc-fl/','/products/bfd-01/','/products/bps-01/','/support/','/about/','/contact/','/privacy/','/bac/license/','/bac/refunds/','/404.html'];
 test('every page: responsive reflow, accessibility, headings and local destinations',async({page})=>{
  fs.mkdirSync('qa-artifacts',{recursive:true});
  const errors:string[]=[];page.on('pageerror',e=>errors.push(e.message));
@@ -28,7 +28,7 @@ test('mobile menu keyboard and filter history',async({page})=>{
  await expect(page.getByRole('button',{name:/Menu/})).toBeFocused();await expect(page.getByRole('navigation',{name:'Primary'})).toBeHidden();
  await page.goto('/products/?family=racing');await expect(page.locator('[data-family]:visible')).toHaveCount(2);
  await page.getByRole('link',{name:'Diagnostic Systems',exact:true}).first().click();await expect(page.locator('[data-family]:visible')).toHaveCount(2);await expect(page).toHaveURL(/family=diagnostics/);await page.goBack();await expect(page).toHaveURL(/family=racing/);
- await page.getByRole('link',{name:'All products',exact:true}).first().click();await expect(page.locator('[data-family]:visible')).toHaveCount(4);
+ await page.getByRole('link',{name:'All products',exact:true}).first().click();await expect(page.locator('[data-family]:visible')).toHaveCount(5);
 });
 test('no scripts: mobile navigation and inquiry links remain usable',async({browser})=>{
  const context=await browser.newContext({javaScriptEnabled:false,viewport:{width:320,height:800}});const page=await context.newPage();
