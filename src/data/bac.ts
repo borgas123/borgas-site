@@ -6,15 +6,15 @@
 // (1.3.0 and later) update themselves from the signed feed at
 // https://updates.borgas.us/stable.json, so this page is only for new buyers.
 //
-// PURCHASING: online checkout for BAC is not live. Until it is, buyers email
-// hello@borgas.us and BORGAS sends a PayPal invoice and the license key by
-// hand. When checkout opens, set checkoutLive=true and wire the shop.
+// PURCHASING: BAC is sold through the borgas.us shop (opened 2026-09-23). The
+// production Worker issues the license key after payment; it appears on the
+// buyer's account page. checkoutLive=false returns to email/invoice sales.
 
 export const bac = {
-  version: "1.3.1",
+  version: "1.3.2",
   released: "2026-09-23",
-  download: "https://updates.borgas.us/BORGAS_Asset_Creator_1.3.1-Setup.exe",
-  sha256: "4b68abfd0fd3a5880728b84f7cfc8193d5ff905adc22968555d33fcb56d252fd",
+  download: "https://updates.borgas.us/BORGAS_Asset_Creator_1.3.2-Setup.exe",
+  sha256: "ccfa2f2b75cfadc53d48a2e6439ad210c428e29745af282f32a9fe78321afc09",
   sizeMB: 0.7,
   publisher: "Devin Tague",            // name on the Authenticode signature
 
@@ -25,5 +25,5 @@ export const bac = {
   // (Summary > Launch-price spots left). null hides the counter.
   launchLeft: null as number | null,
 
-  checkoutLive: false,
+  checkoutLive: true,
 } as const;

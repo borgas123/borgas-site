@@ -30,7 +30,7 @@
       "name": "borgas-commerce-production",
       "vars": {
         "SITE_ORIGIN": "https://borgas.us",
-        "CHECKOUT_ENABLED": "false",
+        "CHECKOUT_ENABLED": "true",
         "PAYPAL_ENV": "live",
         "PAYPAL_CLIENT_ID": "BAAApszu9ICd2qE8A6qfUZkANmB7IkSIOV7F8Q33a1aDViKnBt2nWARZGffOtCgLHg420z7v_YOEUCAAl0",
         "PAYPAL_WEBHOOK_ID": "3RV531501J4128034",
@@ -42,7 +42,7 @@
         "FREE_US_SHIPPING": "true",
         "SALES_TAX_STATE": "MA",
         "SALES_TAX_BPS": "625",
-        "POLICIES_APPROVED": "false",
+        "POLICIES_APPROVED": "true",
         "AUTH_EMAIL_READY": "true",
         "SUPPORT_EMAIL": "hello@borgas.us",
         "WEBHOOK_URL": "https://borgas-commerce-production.borgas-site.workers.dev/webhook",
