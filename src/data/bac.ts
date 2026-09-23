@@ -11,10 +11,10 @@
 // hand. When checkout opens, set checkoutLive=true and wire the shop.
 
 export const bac = {
-  version: "1.3.0",
+  version: "1.3.1",
   released: "2026-09-23",
-  download: "https://updates.borgas.us/BORGAS_Asset_Creator_1.3.0-Setup.exe",
-  sha256: "990c9503a09fb1ee9f00c01a3fef4684b6d0b00b5e046f8182f0523dc70d6646",
+  download: "https://updates.borgas.us/BORGAS_Asset_Creator_1.3.1-Setup.exe",
+  sha256: "4b68abfd0fd3a5880728b84f7cfc8193d5ff905adc22968555d33fcb56d252fd",
   sizeMB: 0.7,
   publisher: "Devin Tague",            // name on the Authenticode signature
 
