@@ -16,5 +16,18 @@
     "image": "/images/bfd-01/product-render-v1.webp",
     "href": "/products/bfd-01/",
     "description": "A field diagnostic instrument for measurement and signal capture."
+  },
+  {
+    "sku": "bac",
+    "name": "BORGAS Asset Creator",
+    "subtitle": "License",
+    "price": 10000,
+    "regularPrice": 15000,
+    "launchLimit": 100,
+    "digital": true,
+    "maxQuantity": 1,
+    "image": "/images/bac/app-preview.webp",
+    "href": "/products/asset-creator/",
+    "description": "Four reference images in, a finished 3D game asset out, on your own PC. License key delivered instantly after payment."
   }
 ]

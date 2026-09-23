@@ -7,7 +7,7 @@ import worker from './worker.mjs';
 test('order API: server totals, account isolation, idempotent capture, verified webhook recovery',async t=>{
  const sqlite=new DatabaseSync(':memory:');sqlite.exec(readFileSync(new URL('./migrations/0001_shop.sql',import.meta.url),'utf8'));
  sqlite.exec(readFileSync(new URL('./migrations/0002_payment_environment.sql',import.meta.url),'utf8'));
- sqlite.exec(readFileSync(new URL('./migrations/0003_inventory_reservations.sql',import.meta.url),'utf8'));
+ sqlite.exec(readFileSync(new URL('./migrations/0003_inventory_reservations.sql',import.meta.url),'utf8'));sqlite.exec(readFileSync(new URL('./migrations/0004_licenses.sql',import.meta.url),'utf8'));
  const DB={prepare(sql){return {bind(...values){const stmt=sqlite.prepare(sql);return {_sql:sql,_values:values,first:async()=>stmt.get(...values),all:async()=>({results:stmt.all(...values)}),run:async()=>stmt.run(...values)};}};},async batch(statements){sqlite.exec('BEGIN');try{const results=statements.map(item=>sqlite.prepare(item._sql).run(...item._values));sqlite.exec('COMMIT');return results;}catch(error){sqlite.exec('ROLLBACK');throw error;}}};
  const env={DB,SITE_ORIGIN:'https://borgas.us',CHECKOUT_ENABLED:'true',PAYPAL_ENV:'sandbox',SANDBOX_TEST_MODE:'true',SANDBOX_TEST_EMAIL:'test@example.test',PAYPAL_CLIENT_ID:'test-client',PAYPAL_SECRET:'test-secret',PAYPAL_MERCHANT_ID:'merchant',PAYPAL_WEBHOOK_ID:'webhook',SUPABASE_URL:'https://auth.test',SUPABASE_PUBLISHABLE_KEY:'test-key',DELIVERY_QUOTE_URL:'https://delivery.test/quote',DELIVERY_QUOTE_TOKEN:'test-delivery'};
  const originalFetch=globalThis.fetch;let paypalOrder,createdPayload,captures=0,webhookValid=true,wrongAmount=false;

@@ -13,7 +13,9 @@
     "PAYPAL_MERCHANT_ID": "PMQTBZSFQFWM8",
     "SANDBOX_TEST_MODE": "true",
     "SANDBOX_PREVIEW_ORIGIN": "http://127.0.0.1:4322",
-    "WEBHOOK_URL": "https://borgas-commerce.borgas-site.workers.dev/webhook"
+    "WEBHOOK_URL": "https://borgas-commerce.borgas-site.workers.dev/webhook",
+    "LICENSE_PUBLIC_KEY": "fgwikc00intpkxaTrzpX8DpbtKR6fiELnUmcbqGXtC0=",
+    "LICENSE_EMAIL_FROM": "BORGAS <no-reply@auth.borgas.us>"
   },
   "d1_databases": [
     {
@@ -43,7 +45,9 @@
         "POLICIES_APPROVED": "false",
         "AUTH_EMAIL_READY": "true",
         "SUPPORT_EMAIL": "hello@borgas.us",
-        "WEBHOOK_URL": "https://borgas-commerce-production.borgas-site.workers.dev/webhook"
+        "WEBHOOK_URL": "https://borgas-commerce-production.borgas-site.workers.dev/webhook",
+        "LICENSE_PUBLIC_KEY": "SyDTmZTARqYz+Pd664PqB/GaFrjvyMaX05E3aBAmhr8=",
+        "LICENSE_EMAIL_FROM": "BORGAS <no-reply@auth.borgas.us>"
       },
       "d1_databases": [
         {

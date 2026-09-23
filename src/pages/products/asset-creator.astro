@@ -78,7 +78,7 @@ const usd = (n: number) => "$" + n.toLocaleString("en-US");
   <div>
     <p class="eyebrow">What you get</p><h2>Buy once, keep updating.</h2>
     <ul class="feature-list">
-      <li>A license key sent by email, usually within 24 hours during launch</li>
+      <li>{bac.checkoutLive ? "Your license key right after payment, on your account page and by email" : "A license key sent by email, usually within 24 hours during launch"}</li>
       <li>The signed BORGAS Asset Creator installer for Windows</li>
       <li>All 1.x updates at no extra cost; BAC checks for them from Settings</li>
       <li>Email support at {site.contactEmail}</li>

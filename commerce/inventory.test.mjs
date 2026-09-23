@@ -6,7 +6,7 @@ import worker from './worker.mjs';
 
 function database(){
  const sqlite=new DatabaseSync(':memory:');
- for(const name of ['0001_shop.sql','0002_payment_environment.sql','0003_inventory_reservations.sql'])sqlite.exec(readFileSync(new URL('./migrations/'+name,import.meta.url),'utf8'));
+ for(const name of ['0001_shop.sql','0002_payment_environment.sql','0003_inventory_reservations.sql','0004_licenses.sql'])sqlite.exec(readFileSync(new URL('./migrations/'+name,import.meta.url),'utf8'));
  const DB={prepare(sql){return {bind(...values){const stmt=sqlite.prepare(sql);return {_sql:sql,_values:values,first:async()=>stmt.get(...values),all:async()=>({results:stmt.all(...values)}),run:async()=>stmt.run(...values)};}};},async batch(statements){sqlite.exec('BEGIN');try{const results=statements.map(item=>sqlite.prepare(item._sql).run(...item._values));sqlite.exec('COMMIT');return results;}catch(error){sqlite.exec('ROLLBACK');throw error;}}};
  return {sqlite,DB};
 }

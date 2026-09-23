@@ -2,6 +2,11 @@ import catalog from '../../shared/catalog.json';
 import { createClient } from '@supabase/supabase-js';
 export { catalog };
 export const money = (cents:number) => new Intl.NumberFormat('en-US',{style:'currency',currency:'USD'}).format(cents/100);
+type Product = (typeof catalog)[number] & {maxQuantity?:number;digital?:boolean};
+export const maxQuantity = (sku:string) => ((catalog as Product[]).find(p=>p.sku===sku)?.maxQuantity) ?? 10;
+export const isDigital = (sku:string) => ((catalog as Product[]).find(p=>p.sku===sku)?.digital) === true;
+// The server decides BAC's launch/regular price (/config prices); the catalog price is only a first display.
+export const unitPrice = (sku:string, prices?:Record<string,number>) => { const p=catalog.find(x=>x.sku===sku)!; const server=prices?.[sku]; return Number.isSafeInteger(server)&&server!>0?server!:p.price; };
 export type Line = {sku:string;quantity:number};
 const key='borgas-cart-v1';
 let fallback:Line[]=[];
@@ -11,11 +16,11 @@ export function cart():Line[]{
 function clean(input:unknown):Line[]{
  if(!Array.isArray(input))return [];
  const result:Line[]=[];
- for(const p of catalog){const line=input.find(x=>x?.sku===p.sku);if(line&&Number.isInteger(line.quantity)&&line.quantity>0)result.push({sku:p.sku,quantity:Math.min(line.quantity,10)});}
+ for(const p of catalog){const line=input.find(x=>x?.sku===p.sku);if(line&&Number.isInteger(line.quantity)&&line.quantity>0)result.push({sku:p.sku,quantity:Math.min(line.quantity,maxQuantity(p.sku))});}
  return result;
 }
 export function saveCart(lines:Line[]){fallback=clean(lines);try{localStorage.setItem(key,JSON.stringify(fallback));}catch{queueMicrotask(()=>document.dispatchEvent(new Event('cart-storage-unavailable')));}document.dispatchEvent(new Event('cart-change'));}
-export function add(sku:string){const lines=cart();const line=lines.find(x=>x.sku===sku);if(line){if(line.quantity>=10)return false;line.quantity++;}else lines.push({sku,quantity:1});saveCart(lines);return true;}
+export function add(sku:string){const lines=cart();const line=lines.find(x=>x.sku===sku);if(line){if(line.quantity>=maxQuantity(sku))return false;line.quantity++;}else lines.push({sku,quantity:1});saveCart(lines);return true;}
 export const apiBase=(import.meta.env.PUBLIC_COMMERCE_API_URL||'').replace(/[/]$/,'');
 const authUrl=import.meta.env.PUBLIC_SUPABASE_URL;
 const authKey=import.meta.env.PUBLIC_SUPABASE_PUBLISHABLE_KEY;

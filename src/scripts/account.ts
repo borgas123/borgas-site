@@ -11,7 +11,15 @@ async function render(){
  el('account-email').textContent=user.email||'';el('orders').textContent='Loading your orders…';
  if(!apiBase){el('orders').textContent='Order history will be available when checkout opens.';return;}
  try{const result=await api('/orders');el('orders').replaceChildren();if(!result.orders.length)el('orders').textContent='No orders yet. Your completed purchases will appear here.';
- for(const order of result.orders){const row=document.createElement('article');row.className='order-row';const title=document.createElement('h3');title.textContent='Order '+order.id.slice(0,8).toUpperCase();const detail=document.createElement('p');detail.textContent=new Date(order.created_at).toLocaleDateString()+' · '+money(order.total)+' · '+(order.payment_env==='sandbox'?'Sandbox test · ':'')+order.status;row.append(title,detail);el('orders').append(row);}}
+ for(const order of result.orders){const row=document.createElement('article');row.className='order-row';const title=document.createElement('h3');title.textContent='Order '+order.id.slice(0,8).toUpperCase();const detail=document.createElement('p');detail.textContent=new Date(order.created_at).toLocaleDateString()+' · '+money(order.total)+' · '+(order.payment_env==='sandbox'?'Sandbox test · ':'')+order.status;row.append(title,detail);
+for(const lic of order.licenses||[]){const box=document.createElement('div');box.className='license-box';
+const label=document.createElement('p');label.textContent='BORGAS Asset Creator license key';
+const key=document.createElement('code');key.textContent=lic.key;key.className='license-key';
+const copy=document.createElement('button');copy.type='button';copy.className='shop-btn secondary';copy.textContent='Copy key';
+copy.addEventListener('click',async()=>{try{await navigator.clipboard.writeText(lic.key);copy.textContent='Copied';}catch{copy.textContent='Select the key and copy it';}});
+const how=document.createElement('p');how.className='small';how.textContent='In BAC, open Settings > License, paste the whole key (including BAC1-) and click Activate. Download BAC from the product page if you have not installed it yet.';
+box.append(label,key,copy,how);row.append(box);}
+el('orders').append(row);}}
  catch(e){el('orders').textContent=e instanceof Error?e.message:'Could not load orders.';}
 }
 async function submit(form:HTMLFormElement,fn:()=>Promise<void>){const button=form.querySelector<HTMLButtonElement>('button[type=submit]')!;button.disabled=true;status('');try{await fn();}catch(e){status(e instanceof Error?e.message:'Please try again.');}finally{button.disabled=false;}}

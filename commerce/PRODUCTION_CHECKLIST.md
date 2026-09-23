@@ -40,7 +40,7 @@
 
 - [x] Configure free US shipping
 - [x] Configure 6.25% Massachusetts sales tax after discounts and zero tax outside the recorded nexus
-- [ ] Confirm Massachusetts sales-tax registration before opening checkout
+- [x] Confirm Massachusetts sales-tax registration before opening checkout (owner, 2026-09-23: registered with DOR)
 - [x] Test invalid states, out-of-stock products, discounts and Massachusetts tax rounding
 - [ ] Connect an address-level tax service before adding any nexus state beyond Massachusetts
 
@@ -53,3 +53,19 @@
 - [ ] Deploy the website and complete one controlled Live purchase
 - [ ] Verify the paid order, inventory decrement and Live webhook delivery
 - [ ] Refund the controlled order in PayPal and confirm the customer experience
+
+## BORGAS Asset Creator licenses (digital product)
+
+The Worker issues a signed BAC purchase key after a verified capture (`commerce/licenses.mjs`,
+migration `0004_licenses.sql`). Price is $100 until 100 live licenses exist, then $150,
+decided on the server. BAC orders need no stock and no shipping; the billing state decides tax.
+
+- [ ] Apply migration `0004_licenses.sql` to `borgas-orders` (Sandbox) and `borgas-orders-production`
+- [ ] Production secret `LICENSE_SIGNING_KEY` = contents of `C:\BORGAS\license-secrets\pilot.secret`
+      (its public key is the one BAC trusts; `LICENSE_PUBLIC_KEY` in `wrangler.jsonc` must match - the Worker refuses to issue otherwise)
+- [ ] Sandbox secret `LICENSE_SIGNING_KEY` = contents of `C:\BORGAS\license-secrets\sandbox-test.secret`
+      (a test key BAC does NOT trust, so Sandbox purchases can never produce a working key)
+- [ ] Optional: `RESEND_API_KEY` secret (sending-only key for `auth.borgas.us`) so the key is also emailed; without it the key is shown on the account page only
+- [ ] Sandbox: buy BAC end to end, see the key on /account/, confirm BAC rejects it (test key)
+- [ ] Live: after checkout opens, one real BAC purchase; paste the key into BAC; refund it and revoke the key with **Revoke License Key**
+- [ ] Set `checkoutLive: true` in `src/data/bac.ts` so the product page's Buy button goes to the shop
