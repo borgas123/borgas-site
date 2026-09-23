@@ -3,7 +3,7 @@ import Base from "../../layouts/Base.astro";
 import Button from "../../components/Button.astro";
 import ProductStatus from "../../components/ProductStatus.astro";
 import { publicProducts,families } from "../../data/products";
-export function getStaticPaths(){return publicProducts().map(product=>({params:{slug:product.slug},props:{product}}));}
+export function getStaticPaths(){return publicProducts().filter(product=>product.family!=="software").map(product=>({params:{slug:product.slug},props:{product}}));}
 const {product:p}=Astro.props;const family=families[p.family];
 const contact="/contact/?product="+encodeURIComponent(p.code)+"&topic="+encodeURIComponent(p.ordering==="none"?"Product question":"Purchase inquiry");
 ---
