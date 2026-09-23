@@ -11,10 +11,10 @@
 // buyer's account page. checkoutLive=false returns to email/invoice sales.
 
 export const bac = {
-  version: "1.3.2",
+  version: "1.4.0",
   released: "2026-09-23",
-  download: "https://updates.borgas.us/BORGAS_Asset_Creator_1.3.2-Setup.exe",
-  sha256: "ccfa2f2b75cfadc53d48a2e6439ad210c428e29745af282f32a9fe78321afc09",
+  download: "https://updates.borgas.us/BORGAS_Asset_Creator_1.4.0-Setup.exe",
+  sha256: "7e6d02b8ae71e299671fbfa27899440d743e261d19deebd2f1f46958cab3471c",
   sizeMB: 0.7,
   publisher: "Devin Tague",            // name on the Authenticode signature
 
