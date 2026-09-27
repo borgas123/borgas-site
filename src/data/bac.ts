@@ -2,7 +2,7 @@
 //
 // UPDATE THIS FILE WITH EVERY BAC RELEASE. The download URL must be the signed
 // installer that the "Publish BAC update to Cloudflare R2" workflow put on
-// updates.borgas.us, and sha256 must match its .sha256 file. Installed copies
+// updates.borgas.us, and sha256 must match the checksum in stable.json there. Installed copies
 // (1.3.0 and later) update themselves from the signed feed at
 // https://updates.borgas.us/stable.json, so this page is only for new buyers.
 //
@@ -11,10 +11,10 @@
 // buyer's account page. checkoutLive=false returns to email/invoice sales.
 
 export const bac = {
-  version: "1.26.2",
-  released: "2026-09-26",
-  download: "https://updates.borgas.us/BORGAS_Asset_Creator_1.26.2-Setup.exe",
-  sha256: "ec50f0ff1d1788e35a520e9ef4ced9e635e6b144ea9046a8a330239afbfcd80a",
+  version: "1.27.0",
+  released: "2026-09-27",
+  download: "https://updates.borgas.us/BORGAS_Asset_Creator_1.27.0-Setup.exe",
+  sha256: "2121e889ceccb43513abdefbd3a2b25366c50da8e08a599dc55c9ca922e279b6",
   sizeMB: 1.0,
   publisher: "Devin Tague",            // name on the Authenticode signature
 
